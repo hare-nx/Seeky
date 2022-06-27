@@ -1,0 +1,41 @@
+<h2>アカウント作成</h2>
+
+<%= form_with model: @user, url: user_registration_path do |f| %>
+  <%= render "public/shared/error_messages", resource: resource %>
+
+  <div class="field">
+    <%= f.label :user_id, "ユーザーID" %>
+    <%= f.text_field :user_id, autocomplete: "user_id" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :username, "ユーザーネーム" %>
+    <%= f.text_field :username, autocomplete: "username" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :email, "メールアドレス" %>
+    <%= f.email_field :email, autocomplete: "email" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password, "パスワード" %>
+    <%= f.password_field :password, autocomplete: "new-password" %>
+    <% if @minimum_password_length %>
+      <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation, "パスワード確認" %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "登録する" %>
+  </div>
+<% end %>
+
+
+<p>アカウントをお持ちの方</p>
+<%= link_to "ログイン", new_user_session_path %>

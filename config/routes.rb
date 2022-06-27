@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
 
-  devise_for :users
+  devise_for :users, controllers: {
+    registrations: "public/registrations",
+    sessions: 'public/sessions'
+  }
 
   scope module: :public do
     root to: 'homes#top'
@@ -28,7 +31,9 @@ Rails.application.routes.draw do
     end
   end
 
-  devise_for :admins
+  devise_for :admins, controllers: {
+    sessions: 'admin/sessions'
+  }
 
   namespace :admin do
     root to: "homes#top"
