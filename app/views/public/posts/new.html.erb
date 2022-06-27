@@ -1,2 +1,32 @@
-<h1>Public::Posts#new</h1>
-<p>Find me in app/views/public/posts/new.html.erb</p>
+<h1>新規投稿を作成</h1>
+<%= form_with model: @post, url: confirm_posts_path, method: :post do |f| %>
+  <div>
+    <%= f.label :post_image, "画像" %>
+    <%= f.file_field :post_image, accept: "image/*" %>
+  </div>
+  <div>
+    <%= f.label :outer, "アウター" %>
+    <%= f.text_field :outer, placeholder: "ブランド名・種類" %>
+  </div>
+  <div>
+    <%= f.label :tops, "トップス" %>
+    <%= f.text_field :tops, placeholder: "ブランド名・種類" %>
+  </div>
+  <div>
+    <%= f.label :bottoms, "ボトムス" %>
+    <%= f.text_field :bottoms, placeholder: "ブランド名・種類" %>
+  </div>
+  <div>
+    <%= f.label :shoes, "シューズ" %>
+    <%= f.text_field :shoes, placeholder: "ブランド名・種類" %>
+  </div>
+  <div>
+    <%= f.label :bag, "バッグ" %>
+    <%= f.text_field :bag, placeholder: "ブランド名・種類" %>
+  </div>
+  <div>
+    <%= f.label :body, "コメント" %>
+    <%= f.text_area :body %>
+  </div>
+  <%= f.submit "投稿を確認する" %>
+<% end %>

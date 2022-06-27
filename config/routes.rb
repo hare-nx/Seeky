@@ -23,7 +23,7 @@ Rails.application.routes.draw do
       end
     end
     resources :posts do
-      member do
+      collection do
         post "confirm"
       end
       resources :comments, only: [:create, :destroy]
