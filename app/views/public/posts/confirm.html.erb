@@ -1,2 +1,39 @@
-<h1>Public::Posts#confirm</h1>
-<p>Find me in app/views/public/posts/confirm.html.erb</p>
+<%= form_with model: @post, url: posts_path do |f| %>
+
+  <%= image_tag @post.get_post_image(300, 400) %>
+  <%= f.hidden_field :post_image, :value => params[:post][:post_image] %>
+  <%= f.hidden_field :tops, :value => params[:post][:tops] %>
+  <%= f.hidden_field :outer, :value => params[:post][:outer] %>
+  <%= f.hidden_field :bottoms, :value => params[:post][:bottoms] %>
+  <%= f.hidden_field :shoes, :value => params[:post][:shoes] %>
+  <%= f.hidden_field :bag, :value => params[:post][:bag] %>
+  <div>
+  <% if @post.outer.present? %>
+    <p>アウター</p><br>
+    <p><%= @post.outer %></p><br>
+  <% end %>
+  <% if @post.tops.present? %>
+    <p>トップス</p><br>
+    <p><%= @post.tops %></p><br>
+  <% end %>
+  <% if @post.bottoms.present? %>
+    <p>ボトムス</p><br>
+    <p><%= @post.bottoms %></p><br>
+  <% end %>
+  <% if @post.shoes.present? %>
+    <p>シューズ</p><br>
+    <p><%= @post.shoes %></p><br>
+  <% end %>
+  <% if @post.bag.present? %>
+    <p>バッグ</p><br>
+    <p><%= @post.bag %></p><br>
+  <% end %>
+  </div>
+  <div>
+    <%= f.hidden_field :body, :value => @post.body %>
+    <%= @post.body %>
+  </div>
+
+  <%= link_to "新規投稿画面へ戻る", new_post_path %>
+  <%= f.submit "投稿を送信する" %>
+<% end %>

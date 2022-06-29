@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     root to: 'homes#top'
     get "about" => 'homes#about'
     get "search" => 'homes#search'
-    resources :users, only: [:show, :edit, :update] do
+    resources :users, param: :user_id, only: [:show, :edit, :update] do
       member do
         get "favorites"
         get "following"
@@ -22,8 +22,9 @@ Rails.application.routes.draw do
         patch "withdraw"
       end
     end
-    resources :posts do
+    resources :posts, only: [:show, :new, :create, :edit, :update, :destroy, :index] do
       collection do
+        get "suggested"
         post "confirm"
       end
       resources :comments, only: [:create, :destroy]

@@ -1,7 +1,7 @@
 class CreateFavorites < ActiveRecord::Migration[6.1]
   def change
     create_table :favorites do |t|
-      t.references :user, null: false
+      t.references :user, null: false, type: :string
       t.integer :post_id, null: false
 
       t.timestamps

@@ -1,2 +1,51 @@
-<h1>Public::Posts#show</h1>
-<p>Find me in app/views/public/posts/show.html.erb</p>
+<div>
+  <%= image_tag @post.user.get_profile_image %>
+  <%= @post.user.username %>
+  <%= @post.post_image %>
+  <div>
+  <% if @post.outer.present? %>
+    <p>アウター</p><br>
+    <p><%= @post.outer %></p><br>
+  <% end %>
+  <% if @post.tops.present? %>
+    <p>トップス</p><br>
+    <p><%= @post.tops %></p><br>
+  <% end %>
+  <% if @post.bottoms.present? %>
+    <p>ボトムス</p><br>
+    <p><%= @post.bottoms %></p><br>
+  <% end %>
+  <% if @post.shoes.present? %>
+    <p>シューズ</p><br>
+    <p><%= @post.shoes %></p><br>
+  <% end %>
+  <% if @post.bag.present? %>
+    <p>バッグ</p><br>
+    <p><%= @post.bag %></p><br>
+  <% end %>
+  </div>
+  <div>
+    <%= @post.body %>
+    <%= @post.created_at.strftime("%Y. %m. %d  %H:%M:%S") %>
+    <div>
+      <% @comments.each do |comment| %>
+        <%= comment.user.get_profile_image %>
+        <%= comment.user.username %>
+        <%= comment %>
+        <%= comment.created_at.strftime("%Y. %m. %d  %H:%M:%S") %>
+      <% end %>
+    </div>
+    <div>
+      <%# ♡アイコンとコメントアイコン %>
+      <p>いいね! <%= @post.favorites.count %>件</p>
+      <p>コメント<%= @post.comments.count %>件</p>
+    </div>
+    <div>
+      <%= form_with model: [@post, @comment] do |f| %>
+        <%= f.text_field :comment %>
+      <%= f.submit "送信" %>
+    </div>
+  </div>
+</div>
+<%= link_to "編集する", edit_post_path(@post) %>
+<%= link_to "削除", post_path(@post), method: :delete %>

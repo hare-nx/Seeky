@@ -1,0 +1,8 @@
+<% unless (current_user.face_type && current_user.frame_type).present? %>
+  <p>顔と骨格のタイプを設定すると、おすすめの投稿を見ることができます。</p>
+  <%= link_to "設定する", edit_user_path(current_user.id) %>
+<% end %>
+
+<% @posts.each do |post| %>
+  <%= image_tag post.get_post_image(300, 400) %>
+<% end %>

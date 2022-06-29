@@ -1,2 +1,9 @@
-<h1>Public::Posts#index</h1>
-<p>Find me in app/views/public/posts/index.html.erb</p>
+<% unless current_user.relationships.present? %>
+  <p><%= @recommendation %></p>
+<% end %>
+
+<%# ユーザーを探す %>
+
+<% @posts.each do |post| %>
+  <%= image_tag post.get_post_image(300, 400) %>
+<% end %>

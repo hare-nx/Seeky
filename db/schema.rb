@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 2022_06_27_084437) do
   end
 
   create_table "comments", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.string "user_id", null: false
     t.integer "post_id", null: false
     t.string "comment", null: false
     t.boolean "status", default: true, null: false
@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 2022_06_27_084437) do
   end
 
   create_table "favorites", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.string "user_id", null: false
     t.integer "post_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(version: 2022_06_27_084437) do
   end
 
   create_table "posts", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.string "user_id", null: false
     t.string "outer"
     t.string "tops"
     t.string "bottoms"
@@ -85,8 +85,8 @@ ActiveRecord::Schema.define(version: 2022_06_27_084437) do
   end
 
   create_table "relationships", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "follow_id", null: false
+    t.string "user_id", null: false
+    t.string "follow_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["follow_id"], name: "index_relationships_on_follow_id"

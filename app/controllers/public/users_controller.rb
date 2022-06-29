@@ -15,6 +15,7 @@ class Public::UsersController < ApplicationController
   end
 
   def welcome
+    @user.user_id=current_user.user_id
   end
 
   def analysis
