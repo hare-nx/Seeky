@@ -1,2 +1,68 @@
-<h1>Public::Users#edit</h1>
-<p>Find me in app/views/public/users/edit.html.erb</p>
+<h1>プロフィール編集</h1>
+<%= form_with model: @user, url: user_path(@user) do |f| %>
+  <%= f.label :profile_image, "プロフィール画像" %>
+  <%= f.file_field :profile_image %><br>
+  <script>
+    $('#user_profile_image').on('change', function (e) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+          $("#preview").attr('src', e.target.result);
+      }
+      reader.readAsDataURL(e.target.files[0]);
+  });
+  </script>
+  <%= f.label :username, "ユーザーネーム" %>
+  <%= f.text_field :username %><br>
+  <%= f.label :email, "メールアドレス" %>
+  <%= f.text_field :email %><br>
+  <%= f.label :stature, "身長" %>
+  <%= f.text_field :stature, placeholder: "3ケタの整数で記入" %>cm<br>
+
+  <% unless (@user.face_type||@user.frame_type).present? %>
+    <div>
+      <p>顔と骨格のタイプを設定すると、あなたのタイプに合ったおすすめの投稿を見ることができます。</p>
+      <p>
+        下の「診断を始める」から、顔・骨格タイプのセルフチェックを行ってください。<br>
+        すでに自身のタイプをご存じの方は、下記項目から選択し、設定を行うこともできます。
+      </p>
+    </div>
+    <%= link_to "診断を始める", analysis_user_path(current_user.user_id) %>
+  <% end %>
+
+  <div>
+    <p>顔と骨格のタイプを1つずつ選択してください。</p>
+    <div>
+      <p>顔タイプ</p>
+      <%= f.radio_button :face_type, User.face_types.key(0) %>
+      <%= f.label :face_type, User.face_types_i18n[:cute] %>
+      <%= f.radio_button :face_type, User.face_types.key(1) %>
+      <%= f.label :face_type, User.face_types_i18n[:active_cute] %>
+      <%= f.radio_button :face_type, User.face_types.key(2) %>
+      <%= f.label :face_type, User.face_types_i18n[:flesh] %>
+      <%= f.radio_button :face_type, User.face_types.key(3) %>
+      <%= f.label :face_type, User.face_types_i18n[:cool_casual] %>
+      <%= f.radio_button :face_type, User.face_types.key(4) %>
+      <%= f.label :face_type, User.face_types_i18n[:feminin] %>
+      <%= f.radio_button :face_type, User.face_types.key(5) %>
+      <%= f.label :face_type, User.face_types_i18n[:cool] %>
+      <%= f.radio_button :face_type, User.face_types.key(6) %>
+      <%= f.label :face_type, User.face_types_i18n[:elegant] %>
+      <%= f.radio_button :face_type, User.face_types.key(7) %>
+      <%= f.label :face_type, User.face_types_i18n[:soft_elegant] %>
+    </div>
+    <div>
+      <p>骨格タイプ</p>
+      <%= f.radio_button :frame_type, User.frame_types.key(0) %>
+      <%= f.label :frame_type, User.frame_types_i18n[:strate] %>
+      <%= f.radio_button :frame_type, User.frame_types.key(1) %>
+      <%= f.label :frame_type, User.frame_types_i18n[:wave] %>
+      <%= f.radio_button :frame_type, User.frame_types.key(2) %>
+      <%= f.label :frame_type, User.frame_types_i18n[:natural] %>
+    </div>
+    <%= link_to "診断を行って顔と骨格タイプを設定し直す" %>
+  </div>
+  <%= f.submit "保存する" %>
+  <%= link_to "アカウントを削除する", unsubscribe_user_path(current_user.user_id) %>
+<% end %>
+
+

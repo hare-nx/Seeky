@@ -1,6 +1,6 @@
 <%= form_with model: @post, url: posts_path do |f| %>
-
-  <%= image_tag @post.get_post_image(300, 400) %>
+  <% byebug %>
+  <%= image_tag @post.post_image %>
   <%= f.hidden_field :post_image, :value => params[:post][:post_image] %>
   <%= f.hidden_field :tops, :value => params[:post][:tops] %>
   <%= f.hidden_field :outer, :value => params[:post][:outer] %>

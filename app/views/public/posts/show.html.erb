@@ -1,49 +1,52 @@
 <div>
-  <%= image_tag @post.user.get_profile_image %>
-  <%= @post.user.username %>
-  <%= @post.post_image %>
+  <%= link_to user_path(@post.user) do %>
+    <%= image_tag @post.user.get_profile_image(80, 80) %>
+  <% end %>
+    <%= link_to "#{@post.user.username}", user_path(@post.user) %>
+  <%= image_tag @post.get_post_image(300, 400) %>
   <div>
-  <% if @post.outer.present? %>
-    <p>アウター</p><br>
-    <p><%= @post.outer %></p><br>
-  <% end %>
-  <% if @post.tops.present? %>
-    <p>トップス</p><br>
-    <p><%= @post.tops %></p><br>
-  <% end %>
-  <% if @post.bottoms.present? %>
-    <p>ボトムス</p><br>
-    <p><%= @post.bottoms %></p><br>
-  <% end %>
-  <% if @post.shoes.present? %>
-    <p>シューズ</p><br>
-    <p><%= @post.shoes %></p><br>
-  <% end %>
-  <% if @post.bag.present? %>
-    <p>バッグ</p><br>
-    <p><%= @post.bag %></p><br>
-  <% end %>
+    <% if @post.outer.present? %>
+      <p>アウター</p><br>
+      <p><%= @post.outer %></p><br>
+    <% end %>
+    <% if @post.tops.present? %>
+      <p>トップス</p><br>
+      <p><%= @post.tops %></p><br>
+    <% end %>
+    <% if @post.bottoms.present? %>
+      <p>ボトムス</p><br>
+      <p><%= @post.bottoms %></p><br>
+    <% end %>
+    <% if @post.shoes.present? %>
+      <p>シューズ</p><br>
+      <p><%= @post.shoes %></p><br>
+    <% end %>
+    <% if @post.bag.present? %>
+      <p>バッグ</p><br>
+      <p><%= @post.bag %></p><br>
+    <% end %>
   </div>
   <div>
     <%= @post.body %>
     <%= @post.created_at.strftime("%Y. %m. %d  %H:%M:%S") %>
     <div>
       <% @comments.each do |comment| %>
-        <%= comment.user.get_profile_image %>
+        <%= comment.user.get_profile_image(80, 80) %>
         <%= comment.user.username %>
         <%= comment %>
-        <%= comment.created_at.strftime("%Y. %m. %d  %H:%M:%S") %>
+        <%= comment.created_at.strftime("%Y.%m.%d   %H:%M:%S") %>
       <% end %>
     </div>
     <div>
       <%# ♡アイコンとコメントアイコン %>
       <p>いいね! <%= @post.favorites.count %>件</p>
-      <p>コメント<%= @post.comments.count %>件</p>
+      <p>コメント <%= @post.comments.count %>件</p>
     </div>
     <div>
       <%= form_with model: [@post, @comment] do |f| %>
         <%= f.text_field :comment %>
-      <%= f.submit "送信" %>
+        <%= f.submit "送信" %>
+      <% end %>
     </div>
   </div>
 </div>

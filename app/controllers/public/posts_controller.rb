@@ -23,6 +23,7 @@ class Public::PostsController < ApplicationController
   def show
     @post=Post.find(params[:id])
     @comments=@post.comments.all
+    @comment=Comment.new
   end
 
   def new
@@ -45,6 +46,7 @@ class Public::PostsController < ApplicationController
 
   def confirm
     @post = Post.new(post_params)
+
   end
 
 

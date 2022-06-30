@@ -1,0 +1,41 @@
+<%= image_tag @user.get_profile_image(80, 80) %>
+<%= @user.username %>
+<%= @user.user_id %>
+<P>
+  <%= @user.face_type if @user.face_type.present? %>
+  <% if @user.frame_type.present? %>
+    <%= "・" if @user.face_type.present? %><%= @user.frame_type %>
+  <% end %>
+  <% if @user.stature.present? %>
+    <%= "・" if (@user.face_type||@user.frame_type).present? %><%= @user.stature %>cm
+  <% end %>
+</P>
+<p><%= @user.introduction %>
+
+<% if @user==current_user %>
+  <%= link_to "プロフィール編集", edit_user_path(current_user.user_id) %>
+<% else %>
+  <% if current_user.following?(@user) %>
+    <%= form_with model: @following_user, method: :delete do |f| %>
+      <%= hidden_field_tag :follow_id, @user.user_id %>
+      <%= f.submit 'フォロー中' %>
+    <% end %>
+  <% else %>
+    <%= form_with model: @relationship do |f| %>
+      <%= hidden_field_tag :follow_id, @user.user_id %>
+      <%= f.submit 'フォロー' %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<p>投稿<%= @user.posts.count %>件</p>
+<p>フォロー中<%= @user.relationships.count %> | フォロワー<%= @followers.count %>件</p>
+
+<%= link_to "いいね", favorites_user_path(current_user.user_id) if (@user==current_user)&&(@user.favorites.present?) %>
+<%= link_to "コメント", comments_user_path(current_user.user_id) if (@user==current_user)&&(@user.comments.present?) %>
+
+<% @posts.each do |post| %>
+  <%= link_to post_path(post.id) do %>
+    <%= image_tag post.get_post_image(200, 300) %>
+  <% end %>
+<% end %>

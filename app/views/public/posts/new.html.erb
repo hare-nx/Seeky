@@ -1,5 +1,6 @@
 <h1>新規投稿を作成</h1>
-<%= form_with model: @post, url: confirm_posts_path, method: :post do |f| %>
+<%= form_with model: @post do |f| %>
+<%#, url: confirm_posts_path, method: :post %>
   <div>
     <%= f.label :post_image, "画像" %>
     <%= f.file_field :post_image, accept: "image/*" %>
@@ -30,3 +31,14 @@
   </div>
   <%= f.submit "投稿を確認する" %>
 <% end %>
+<img id="preview" style="width:40%;">
+
+<script>
+  $('#post_post_image').on('change', function (e) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+        $("#preview").attr('src', e.target.result);
+    }
+    reader.readAsDataURL(e.target.files[0]);
+});
+</script>

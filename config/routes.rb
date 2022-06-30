@@ -25,11 +25,12 @@ Rails.application.routes.draw do
     resources :posts, only: [:show, :new, :create, :edit, :update, :destroy, :index] do
       collection do
         get "suggested"
-        post "confirm"
+        # post "confirm"
       end
       resources :comments, only: [:create, :destroy]
       resource :favorites, only: [:create, :destroy]
     end
+    resources :relationships, only: [:create, :destroy]
   end
 
   devise_for :admins, controllers: {

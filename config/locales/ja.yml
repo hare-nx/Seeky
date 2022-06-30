@@ -1,0 +1,20 @@
+ja:
+  enums:
+    user:
+      face_type:
+        cute: "キュート"
+        active_cute: "アクティブキュート"
+        flesh: "フレッシュ"
+        cool_casual: "クールカジュアル"
+        feminin: "フェミニン"
+        cool: "クール"
+        elegant: "エレガント"
+        soft_elegant: "ソフトエレガント"
+      frame_type:
+        strate: "ストレート"
+        wave: "ウェーブ"
+        natural: "ナチュラル"
+      status:
+        active: "使用"
+        suspension: "停止"
+        withdrawal: "退会"
