@@ -76,19 +76,30 @@ class Public::UsersController < ApplicationController
     straight=only_ans.count("直線")
     question=FaceQuestion.find_by(title: "目の印象は")
     eye_size=question_ans.fetch(question.id)
-
-    if child>adult && (curve>=7 && eye_size=="曲線")
+    if child>adult && curve>=7 && eye_size=="曲線"
       @result=User.face_types.key(0)
       @result_ja=User.face_types_i18n[:cute]
-    elsif child>adult&& (curve>=7 && eye_size=="直線")
+    elsif child>adult&& curve>=7 && eye_size=="直線"
       @result=User.face_types.key(1)
       @result_ja=User.face_types_i18n[:active_cute]
-    elsif child>adult && (straight>=2 && straight<=6)
+    elsif child>adult && straight>=2 && straight<=6
       @result=User.face_types.key(2)
       @result_ja=User.face_types_i18n[:flesh]
     elsif child>adult && straight>=7
       @result=User.face_types.key(3)
       @result_ja=User.face_types_i18n[:cool_casual]
+    elsif adult>child && curve>=7
+      @result=User.face_types.key(4)
+      @result_ja=User.face_types_i18n[:feminin]
+    elsif adult>child && straight>=2 && straight<=6 && eye_size=="曲線"
+      @result=User.face_types.key(5)
+      @result_ja=User.face_types_i18n[:soft_elegant]
+    elsif adult>child && straight>=2 && straight<=6 && eye_size=="直線"
+      @result=User.face_types.key(6)
+      @result_ja=User.face_types_i18n[:elegant]
+    elsif adult>child && straight>=7
+      @result=User.face_types.key(7)
+      @result_ja=User.face_types_i18n[:cool]
     end
   end
 
