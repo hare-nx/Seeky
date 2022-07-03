@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  enum face_type: {cute: 0, avtive_cute: 1, flesh: 2, cool_casual: 3, feminin: 4, cool: 5, elegant: 6, soft_elegant: 7}
+  enum face_type: {cute: 0, active_cute: 1, flesh: 2, cool_casual: 3, feminin: 4, cool: 5, elegant: 6, soft_elegant: 7}
   enum frame_type: {strate: 0, wave: 1, natural: 2}
   enum status: {active: 0, suspension: 1, withdrawal: 2}
 

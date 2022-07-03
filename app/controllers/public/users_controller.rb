@@ -54,9 +54,41 @@ class Public::UsersController < ApplicationController
     elsif b>a&&b>c
       @result=User.frame_types.key(1)
       @result_ja=User.frame_types_i18n[:wave]
-    else c>a&&c>b
+    elsif c>a&&c>b
       @result=User.frame_types.key(2)
       @result_ja=User.frame_types_i18n[:natural]
+    end
+  end
+
+  def face_type_analysis
+    @face_questions=FaceQuestion.all
+  end
+
+  def face_type_result
+    @user=User.find_by(user_id: current_user.user_id)
+    @face_questions=FaceQuestion.all
+    answers=@face_questions.map{|q|  [q.id, params[:"#{q.id}"]] }
+    question_ans=Hash[answers]
+    only_ans=@face_questions.map{|q|  params[:"#{q.id}"] }
+    child=only_ans.count("子ども")
+    adult=only_ans.count("大人")
+    curve=only_ans.count("曲線")
+    straight=only_ans.count("直線")
+    question=FaceQuestion.find_by(title: "目の印象は")
+    eye_size=question_ans.fetch(question.id)
+
+    if child>adult && (curve>=7 && eye_size=="曲線")
+      @result=User.face_types.key(0)
+      @result_ja=User.face_types_i18n[:cute]
+    elsif child>adult&& (curve>=7 && eye_size=="直線")
+      @result=User.face_types.key(1)
+      @result_ja=User.face_types_i18n[:active_cute]
+    elsif child>adult && (straight>=2 && straight<=6)
+      @result=User.face_types.key(2)
+      @result_ja=User.face_types_i18n[:flesh]
+    elsif child>adult && straight>=7
+      @result=User.face_types.key(3)
+      @result_ja=User.face_types_i18n[:cool_casual]
     end
   end
 

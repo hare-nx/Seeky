@@ -1,0 +1,9 @@
+<h1>診断結果</h1>
+<%= @result_ja %>
+
+<%= link_to "診断し直す", face_type_analysis_user_path(current_user.user_id) %>
+<%= form_with model: @user do |f| %>
+  <%= f.hidden_field :face_type, :value => @result %>
+  <%= f.submit "保存して顔タイプの診断に進む" %>
+<% end %>
+<%= link_to "戻る", user_path(current_user.user_id) %>

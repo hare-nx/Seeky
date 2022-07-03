@@ -1,2 +1,6 @@
-<h1>Admin::FaceQuestions#edit</h1>
-<p>Find me in app/views/admin/face_questions/edit.html.erb</p>
+<%= form_with model: @face_question, url: admin_face_questions_path do |f| %>
+  <%= f.text_field :title, placeholder: "質問タイトル" %><br>
+  <%= f.text_area :answer_1, placeholder: "子ども顔または曲線" %><br>
+  <%= f.text_area :answer_2, placeholder: "大人顔または直線" %><br>
+  <%= f.submit "保存する" %>
+<% end %>
