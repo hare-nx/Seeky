@@ -2,9 +2,9 @@
 <%= @user.username %>
 <%= @user.user_id %>
 <P>
-  <%= @user.face_type if @user.face_type.present? %>
+  <%= @user.face_type_i18n if @user.face_type.present? %>
   <% if @user.frame_type.present? %>
-    <%= "・" if @user.face_type.present? %><%= @user.frame_type %>
+    <%= "・" if @user.face_type.present? %><%= @user.frame_type_i18n %>
   <% end %>
   <% if @user.stature.present? %>
     <%= "・" if (@user.face_type||@user.frame_type).present? %><%= @user.stature %>cm

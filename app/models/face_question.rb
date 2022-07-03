@@ -1,0 +1,2 @@
+class FaceQuestion < ApplicationRecord
+end

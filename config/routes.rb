@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
 
+  namespace :admin do
+    get 'face_questions/edit'
+    get 'face_questions/index'
+  end
+  namespace :admin do
+    get 'frame_questions/edit'
+    get 'frame_questions/index'
+  end
   devise_for :users, controllers: {
     registrations: "public/registrations",
     sessions: 'public/sessions'
@@ -16,8 +24,10 @@ Rails.application.routes.draw do
         get "followers"
         get "comments"
         get "welcome"
-        get "analysis"
-        post "result"
+        get "frame_type_analysis"
+        post "frame_type_result"
+        get "face_type_analysis"
+        post "face_type_result"
         get "unsubscribe"
         patch "withdraw"
       end
@@ -40,6 +50,8 @@ Rails.application.routes.draw do
   namespace :admin do
     root to: "homes#top"
     resources :users, only: [:show, :update]
+    resources :frame_questions, only: [:create, :edit, :update, :index, :destroy]
+    resources :face_questions, only: [:create, :edit, :update, :index, :destroy]
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

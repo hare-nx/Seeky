@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_27_084437) do
+ActiveRecord::Schema.define(version: 2022_07_01_061434) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -62,12 +62,29 @@ ActiveRecord::Schema.define(version: 2022_06_27_084437) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "face_questions", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "answer_1", null: false
+    t.string "answer_2", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "favorites", force: :cascade do |t|
     t.string "user_id", null: false
     t.integer "post_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
+  create_table "frame_questions", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "strate", null: false
+    t.string "wave", null: false
+    t.string "natural", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "posts", force: :cascade do |t|
