@@ -29,7 +29,15 @@
 <% end %>
 
 <p>投稿<%= @user.posts.count %>件</p>
-<p>フォロー中<%= @user.relationships.count %> | フォロワー<%= @followers.count %>件</p>
+<p>
+  <%= link_to following_user_path(@user) do %>
+    フォロー中<%= @user.relationships.count %>人
+  <% end %>
+  |
+  <%= link_to followers_user_path(@user) do %>
+    フォロワー<%= @followers.count %>人
+  <% end %>
+</p>
 
 <%= link_to "いいね", favorites_user_path(current_user.user_id) if (@user==current_user)&&(@user.favorites.present?) %>
 <%= link_to "コメント", comments_user_path(current_user.user_id) if (@user==current_user)&&(@user.comments.present?) %>

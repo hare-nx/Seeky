@@ -28,17 +28,31 @@
   </div>
   <div>
     <%= @post.body %>
+    <%= "##{@post.user.face_type_i18n}" if @post.user.face_type.present? %>
+    <%= "##{@post.user.frame_type_i18n}" if @post.user.frame_type.present? %>
+    <%= "##{@post.user.stature}cm" if @post.user.stature.present? %>
+
     <%= @post.created_at.strftime("%Y. %m. %d  %H:%M:%S") %>
     <div>
       <% @comments.each do |comment| %>
-        <%= comment.user.get_profile_image(80, 80) %>
+        <%= image_tag comment.user.get_profile_image(80, 80) %>
         <%= comment.user.username %>
-        <%= comment %>
+        <%= comment.comment %>
         <%= comment.created_at.strftime("%Y.%m.%d   %H:%M:%S") %>
       <% end %>
     </div>
     <div>
-      <%# ♡アイコンとコメントアイコン %>
+      <% if @post.favorited_by?(current_user) %>
+        <%= link_to post_favorites_path(@post), method: :delete do %>
+          ♥ <%#アイコン%>
+        <% end %>
+      <% else %>
+        <%= link_to post_favorites_path(@post), method: :post do %>
+          ♡
+        <% end %>
+      <% end %>
+
+      <%# コメントアイコン %>
       <p>いいね! <%= @post.favorites.count %>件</p>
       <p>コメント <%= @post.comments.count %>件</p>
     </div>

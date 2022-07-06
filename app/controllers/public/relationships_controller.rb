@@ -4,7 +4,11 @@ class Public::RelationshipsController < ApplicationController
   def create
     following = current_user.follow(@user)
     following.save
-    redirect_to user_path(@user)
+    if params[:following]
+      redirect_to following_user_path
+    else
+      redirect_to user_path(@user)
+    end
   end
 
   def destroy

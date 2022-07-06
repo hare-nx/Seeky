@@ -1,3 +1,4 @@
+
   <p>キーワード検索</p>
   <%= search_form_for @q, url: search_path do |f| %>
     <%= f.search_field :outer_or_tops_or_bottoms_or_shoes_or_bag_or_body_cont, placeholder: "服の種類/ブランド名" %>
@@ -32,8 +33,19 @@
 
 
 
-<% @posts.each do |post| %>
-  <%= link_to post_path(post) do %>
-    <%= image_tag post.get_post_image(300, 400) %>
+<% if @results.present? %>
+  <% @results.each do |post| %>
+    <%= link_to post_path(post) do %>
+      <%= image_tag post.get_post_image(300, 400) %>
+    <% end %>
+  <% end %>
+<% else %>
+  <div>
+    <p>一致する投稿がありません。条件を変えて検索してください。</p>
+  </div>
+  <% Post.all.each do |post| %>
+    <%= link_to post_path(post) do %>
+      <%= image_tag post.get_post_image(300, 400) %>
+    <% end %>
   <% end %>
 <% end %>

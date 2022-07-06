@@ -25,12 +25,17 @@ class Public::UsersController < ApplicationController
   end
 
   def following
+    @user=User.find(params[:user_id])
+    @users=@user.followings
   end
 
   def followers
+    @user=User.find(params[:user_id])
+    @users=@user.followers
   end
 
   def comments
+    @comments=current_user.comments.all
   end
 
   def welcome
@@ -104,6 +109,13 @@ class Public::UsersController < ApplicationController
   end
 
   def unsubscribe
+  end
+  
+  def withdraw
+    @user=User.find_by(user_id: current_user.user_id)
+    @user.update(status: 2)
+    reset_session
+    redirect_to root_path
   end
 
 

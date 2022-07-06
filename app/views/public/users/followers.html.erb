@@ -1,2 +1,22 @@
-<h1>Public::Users#followers</h1>
-<p>Find me in app/views/public/users/followers.html.erb</p>
+<h2>フォロワー</h2>
+<h2><%= link_to "フォロー中", following_user_path(@user) %></h2>
+
+<% @users.each do |user| %>
+<%= link_to user_path(user) do %>
+  <div>
+    <%= image_tag user.get_profile_image(80, 80) %>
+    <%= user.username %>
+    <%= user.user_id %>
+    <P>
+      <%= user.face_type_i18n if user.face_type.present? %>
+      <% if user.frame_type.present? %>
+        <%= "・" if user.face_type.present? %><%= user.frame_type_i18n %>
+      <% end %>
+      <% if user.stature.present? %>
+        <%= "・" if (user.face_type||user.frame_type).present? %><%= user.stature %>cm
+      <% end %>
+    </P>
+    <%= user.introduction %>
+  </div>
+<% end %>
+<% end %>

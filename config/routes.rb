@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   scope module: :public do
     root to: 'homes#top'
     get "about" => 'homes#about'
-    get "search" => 'homes#search'
+    get "search" => 'homes#post_search'
     resources :users, param: :user_id, only: [:show, :edit, :update] do
       member do
         get "favorites"

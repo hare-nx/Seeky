@@ -5,5 +5,7 @@
 <%# ユーザーを探す %>
 
 <% @posts.each do |post| %>
-  <%= image_tag post.get_post_image(300, 400) %>
+  <%= link_to post_path(post) do %>
+    <%= image_tag post.get_post_image(300, 400) %>
+  <% end %>
 <% end %>
