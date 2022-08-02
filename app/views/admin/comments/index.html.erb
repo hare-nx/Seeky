@@ -1,0 +1,32 @@
+<table>
+  <tr>
+    <th>コメント投稿日</th>
+    <th>ユーザーID</th>
+    <th>コメント内容</th>
+    <th>ステータス</th>
+    <th></th>
+  </tr>
+  <% @comments.each do |comment| %>
+  <tr>
+    <td>
+      <%= link_to admin_comment_path(comment) do %>
+        <%= comment.created_at.strftime("%Y/%m/%d %H:%M") %>
+      <% end %>
+    </td>
+    <td>
+      <%= link_to admin_user_path(comment.user) do %>
+        <%= comment.user_id %>
+      <% end %>
+    </td>
+    <td><%= comment.comment %></td>
+    <td>
+      <% if comment.status? %>
+        表示
+      <% else %>
+        非表示
+      <% end %>
+    </td>
+    <td><%= button_to "対象の投稿詳細", admin_post_path(comment.post) %></td>
+  </tr>
+  <% end %>
+</table>

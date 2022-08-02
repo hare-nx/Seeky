@@ -1,13 +1,5 @@
 Rails.application.routes.draw do
 
-  namespace :admin do
-    get 'face_questions/edit'
-    get 'face_questions/index'
-  end
-  namespace :admin do
-    get 'frame_questions/edit'
-    get 'frame_questions/index'
-  end
   devise_for :users, controllers: {
     registrations: "public/registrations",
     sessions: 'public/sessions'
@@ -17,7 +9,10 @@ Rails.application.routes.draw do
     root to: 'homes#top'
     get "about" => 'homes#about'
     get "search" => 'homes#post_search'
-    resources :users, param: :user_id, only: [:show, :edit, :update] do
+    resources :users, param: :user_id, only: [:show, :edit, :update, :index] do
+      collection do
+        get "search" => 'users#user_search'
+      end
       member do
         get "favorites"
         get "following"
@@ -37,7 +32,10 @@ Rails.application.routes.draw do
         get "suggested"
         # post "confirm"
       end
-      resources :comments, only: [:create, :destroy]
+      resource :reports, only: [:create, :destroy]
+      resources :comments, only: [:create, :destroy] do
+        resource :reports, only: [:create, :destroy]
+      end
       resource :favorites, only: [:create, :destroy]
     end
     resources :relationships, only: [:create, :destroy]
@@ -50,8 +48,12 @@ Rails.application.routes.draw do
   namespace :admin do
     root to: "homes#top"
     resources :users, only: [:show, :update]
+    resources :comments, only: [:index, :update, :show]
+    resources :posts, only: [:index, :update, :show]
     resources :frame_questions, only: [:create, :edit, :update, :index, :destroy]
     resources :face_questions, only: [:create, :edit, :update, :index, :destroy]
+    get "reported_posts" => 'reports#reported_posts'
+    get "reported_comments" => 'reports#reported_comments'
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

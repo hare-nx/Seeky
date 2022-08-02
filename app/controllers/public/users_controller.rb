@@ -1,4 +1,5 @@
 class Public::UsersController < ApplicationController
+  before_action :set_q, only: [:index, :user_search]
   def show
     @user=User.find(params[:user_id])
     @following_user=current_user.relationships.find_by(follow_id: @user.user_id)
@@ -19,6 +20,14 @@ class Public::UsersController < ApplicationController
     else
       redirect_to user_path(user)
     end
+  end
+
+  def index
+    @users=User.all
+  end
+
+  def user_search
+    @results = @q.result(distinct: true)
   end
 
   def favorites
@@ -55,7 +64,7 @@ class Public::UsersController < ApplicationController
     c=answers.count("C")
     if a>b&&a>c
       @result=User.frame_types.key(0)
-      @result_ja=User.frame_types_i18n[:strate]
+      @result_ja=User.frame_types_i18n[:stra]
     elsif b>a&&b>c
       @result=User.frame_types.key(1)
       @result_ja=User.frame_types_i18n[:wave]
@@ -110,7 +119,7 @@ class Public::UsersController < ApplicationController
 
   def unsubscribe
   end
-  
+
   def withdraw
     @user=User.find_by(user_id: current_user.user_id)
     @user.update(status: 2)
@@ -126,5 +135,9 @@ class Public::UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:user_id, :user_name, :email, :password, :face_type, :frame_type, :stature, :introduction)
+  end
+
+  def set_q
+    @q = User.ransack(params[:q])
   end
 end

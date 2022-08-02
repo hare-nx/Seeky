@@ -1,0 +1,48 @@
+<table>
+  <tr>
+    <th>投稿日</th>
+    <th>ユーザーID</th>
+    <th>一言</th>
+    <th>詳細情報</th>
+    <th>ステータス</th>
+  </tr>
+  <% @posts.each do |post| %>
+  <tr>
+    <td>
+      <%= link_to admin_post_path(post) do %>
+        <%= post.created_at.strftime("%Y/%m/%d %H:%M") %>
+      <% end %>
+    </td>
+    <td>
+      <%= link_to admin_user_path(post.user) do %>
+        <%= post.user_id %>
+      <% end %>
+    </td>
+    <td><%= post.body %></td>
+    <td>
+      <% if post.outer.present? %>
+        アウター: <%= post.outer %><br>
+      <% end %>
+      <% if post.tops.present? %>
+        トップス: <%= post.tops %><br>
+      <% end %>
+      <% if post.bottoms.present? %>
+        ボトムス: <%= post.bottoms %><br>
+      <% end %>
+      <% if post.shoes.present? %>
+        シューズ: <%= post.shoes %><br>
+      <% end %>
+      <% if post.bag.present? %>
+        バッグ: <%= post.bag %><br>
+      <% end %>
+    </td>
+    <td>
+      <% if post.status? %>
+        表示
+      <% else %>
+        非表示
+      <% end %>
+    </td>
+  </tr>
+  <% end %>
+</table>

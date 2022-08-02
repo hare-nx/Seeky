@@ -1,6 +1,6 @@
 <%= form_with model: @frame_question, url: admin_frame_questions_path do |f| %>
   <%= f.text_field :title, placeholder: "質問タイトル" %><br>
-  <%= f.text_area :strate, placeholder: "ストレート" %><br>
+  <%= f.text_area :straight, placeholder: "ストレート" %><br>
   <%= f.text_area :wave, placeholder: "ウェーブ" %><br>
   <%= f.text_area :natural, placeholder: "ナチュラル" %><br>
   <%= f.submit "保存する" %>
@@ -20,8 +20,8 @@
   </tr>
   <% @frame_questions.each do |q| %>
   <tr>
-    <td><%= q.title %></td>
-    <td><%= q.strate %></td>
+    <td><%= q.title %>...?</td>
+    <td><%= q.straight %></td>
     <td><%= q.wave %></td>
     <td><%= q.natural %></td>
     <td><%= link_to "編集", edit_admin_frame_question_path(q) %> <%= link_to "削除", admin_frame_question_path(q), method: :delete %></td>

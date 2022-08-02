@@ -4,6 +4,7 @@ class CreateFaceQuestions < ActiveRecord::Migration[6.1]
       t.string :title, null: false, unique: true
       t.string :answer_1, null: false
       t.string :answer_2, null: false
+      t.boolean :generation_or_shape, null: false
       t.timestamps
     end
   end

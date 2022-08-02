@@ -3,7 +3,7 @@
   <% @frame_questions.each do |q| %>
     <p><%= q.title %></p>
     <%= f.radio_button :"#{q.id}", "A", checked: true %>
-    <%= f.label :"#{q.id}", "#{q.strate}" %>
+    <%= f.label :"#{q.id}", "#{q.straight}" %>
     <%= f.radio_button :"#{q.id}", "B" %>
     <%= f.label :"#{q.id}", "#{q.wave}" %>
     <%= f.radio_button :"#{q.id}", "C" %>

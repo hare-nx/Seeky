@@ -1,4 +1,10 @@
 <div>
+  <% if @post.reported_by?(current_user, @post) %>
+    <%= button_to "通報を取り消す", post_reports_path(@post), method: :delete unless @post.user==current_user %>
+  <% else %>
+    <%= button_to "通報する", post_reports_path(@post), method: :post unless @post.user==current_user %>
+  <% end %>
+
   <%= link_to user_path(@post.user) do %>
     <%= image_tag @post.user.get_profile_image(80, 80) %>
   <% end %>
@@ -28,14 +34,19 @@
   </div>
   <div>
     <%= @post.body %>
-    <%= "##{@post.user.face_type_i18n}" if @post.user.face_type.present? %>
-    <%= "##{@post.user.frame_type_i18n}" if @post.user.frame_type.present? %>
-    <%= "##{@post.user.stature}cm" if @post.user.stature.present? %>
+    <%= @post.user.face_type_i18n if @post.user.face_type.present? %>
+    <%= @post.user.frame_type_i18n if @post.user.frame_type.present? %>
+    <%= "#{@post.user.stature}cm" if @post.user.stature.present? %>
 
     <%= @post.created_at.strftime("%Y. %m. %d  %H:%M:%S") %>
     <div>
       <% @comments.each do |comment| %>
         <%= image_tag comment.user.get_profile_image(80, 80) %>
+        <% if comment.reported_by?(current_user, comment) %>
+          <%= button_to "通報を取り消す", post_comment_reports_path(@post, comment), method: :delete unless comment.user==current_user %>
+        <% else %>
+          <%= button_to "通報する", post_comment_reports_path(@post, comment), method: :post unless comment.user==current_user %>
+        <% end %>
         <%= comment.user.username %>
         <%= comment.comment %>
         <%= comment.created_at.strftime("%Y.%m.%d   %H:%M:%S") %>

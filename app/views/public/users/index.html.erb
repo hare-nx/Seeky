@@ -1,0 +1,48 @@
+<p>ユーザーID/ユーザーネームから検索</p>
+  <%= search_form_for @q, url: search_users_path do |f| %>
+    <%= f.search_field :username_or_user_id_cont %>
+    <%= f.submit "検索" %>
+  <% end %>
+  <div>
+  <p>詳細検索</p>
+  <%= search_form_for @q, url: search_users_path do |f| %>
+    <span>身長</span>
+    <%= f.number_field :stature_gteq, placeholder: "例) 140" %>
+    <span>～</span>
+    <%= f.number_field :stature_lteq, placeholder: "例) 145" %>
+    <span>㎝</span>
+    <div>
+    <span>顔タイプ</span><br>
+    <% User.face_types.each do |k| %>
+      <%= f.check_box :face_type_in, {multiple: true}, k[1], nil %>
+      <%= f.label "#{User.face_types_i18n[:"#{k[0]}"]}" %>
+    <% end %>
+    </div>
+    <div>
+    <span>骨格</span><br>
+    <% User.frame_types.each do |k| %>
+      <%= f.check_box :frame_type_in, {multiple: true}, k[1], nil %>
+      <%= f.label "#{User.frame_types_i18n[:"#{k[0]}"]}" %>
+    <% end %>
+    <div><%= f.submit "検索" %></div>
+    </div>
+  <% end %>
+
+
+<% @users.each do |user| %>
+  <%= link_to user_path(user) do %>
+    <%= image_tag user.get_profile_image(80, 80) %>
+    <%= user.username %>
+    <%= user.user_id %>
+    <P>
+      <%= user.face_type_i18n if user.face_type.present? %>
+      <% if user.frame_type.present? %>
+        <%= "・" if user.face_type.present? %><%= user.frame_type_i18n %>
+      <% end %>
+      <% if user.stature.present? %>
+        <%= "・" if (user.face_type||user.frame_type).present? %><%= user.stature %>cm
+      <% end %>
+    </P>
+    <%= user.introduction %>
+  <% end %>
+<% end %>

@@ -1,3 +1,3 @@
 class FrameQuestion < ApplicationRecord
-  validates :title, :strate, :wave, :natural, presence: true
+  validates :title, :straight, :wave, :natural, presence: true
 end

@@ -1,2 +1,29 @@
-<h1>Admin::Homes#top</h1>
-<p>Find me in app/views/admin/homes/top.html.erb</p>
+<h1>ユーザー一覧</h1>
+<table>
+  <tr>
+    <th>ユーザーID</th>
+    <th>ユーザーネーム</th>
+    <th>ステータス</th>
+    <th>通報された投稿数</th>
+    <th>通報されたコメント数</th>
+  </tr>
+  <% @users.each do |user| %>
+    <%= link_to admin_user_path(user) do %>
+      <tr>
+        <td>
+          <%= link_to admin_user_path(user) do %>
+            <%= user.user_id %>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to admin_user_path(user) do %>
+            <%= user.username %></td>
+          <% end %>
+        <td><%= user.status_i18n %></td>
+        <td><%= user.number_of_reported_posts(user) %></td>
+        <td><%= user.number_of_reported_comments(user) %></td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>
+

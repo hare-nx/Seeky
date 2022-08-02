@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_03_040602) do
+ActiveRecord::Schema.define(version: 2022_07_07_073641) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -66,9 +66,9 @@ ActiveRecord::Schema.define(version: 2022_07_03_040602) do
     t.string "title", null: false
     t.string "answer_1", null: false
     t.string "answer_2", null: false
+    t.boolean "generation_or_shape", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "generation_or_shape", null: false
   end
 
   create_table "favorites", force: :cascade do |t|
@@ -81,7 +81,7 @@ ActiveRecord::Schema.define(version: 2022_07_03_040602) do
 
   create_table "frame_questions", force: :cascade do |t|
     t.string "title", null: false
-    t.string "strate", null: false
+    t.string "straight", null: false
     t.string "wave", null: false
     t.string "natural", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -112,6 +112,17 @@ ActiveRecord::Schema.define(version: 2022_07_03_040602) do
     t.index ["user_id"], name: "index_relationships_on_user_id"
   end
 
+  create_table "reports", force: :cascade do |t|
+    t.string "user_id", null: false
+    t.string "reported_id", null: false
+    t.integer "post_id"
+    t.integer "comment_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["reported_id"], name: "index_reports_on_reported_id"
+    t.index ["user_id"], name: "index_reports_on_user_id"
+  end
+
   create_table "users", primary_key: "user_id", id: :string, force: :cascade do |t|
     t.string "username", null: false
     t.string "email", default: "", null: false
@@ -137,4 +148,6 @@ ActiveRecord::Schema.define(version: 2022_07_03_040602) do
   add_foreign_key "posts", "users", primary_key: "user_id"
   add_foreign_key "relationships", "users", column: "follow_id", primary_key: "user_id"
   add_foreign_key "relationships", "users", primary_key: "user_id"
+  add_foreign_key "reports", "users", column: "reported_id", primary_key: "user_id"
+  add_foreign_key "reports", "users", primary_key: "user_id"
 end

@@ -1,5 +1,6 @@
 class Post < ApplicationRecord
   belongs_to :user, primary_key: :user_id
+  has_many :reports, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_one_attached :post_image
@@ -15,5 +16,9 @@ class Post < ApplicationRecord
 
   def favorited_by?(user)
     favorites.exists?(user_id: user.user_id)
+  end
+
+  def reported_by?(user, post)
+    reports.exists?(user_id: user.user_id, post_id: post.id)
   end
 end

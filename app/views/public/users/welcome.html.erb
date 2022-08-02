@@ -34,7 +34,7 @@
   <div>
     <p>骨格タイプ</p>
     <%= f.radio_button :frame_type, User.frame_types.key(0) %>
-    <%= f.label :frame_type, User.frame_types_i18n[:strate] %>
+    <%= f.label :frame_type, User.frame_types_i18n[:straight] %>
     <%= f.radio_button :frame_type, User.frame_types.key(1) %>
     <%= f.label :frame_type, User.frame_types_i18n[:wave] %>
     <%= f.radio_button :frame_type, User.frame_types.key(2) %>

@@ -1,41 +1,47 @@
-<h2>アカウント作成</h2>
-
-<%= form_with model: @user, url: user_registration_path do |f| %>
-  <%= render "public/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <%= f.label :user_id, "ユーザーID" %>
-    <%= f.text_field :user_id, autocomplete: "user_id" %>
+<div class="container-fruid p-5 m-5">
+  <div class="row mb-5">
+    <h4 class="offset-sm-2">アカウント作成</h4>
   </div>
 
-  <div class="field">
-    <%= f.label :username, "ユーザーネーム" %>
-    <%= f.text_field :username, autocomplete: "username" %>
+  <%= form_with model: @user, url: user_registration_path do |f| %>
+  <div class="row justify-content-center">
+
+    <%= render "public/shared/error_messages", resource: resource %>
+    <table class="table table-borderless col-sm-7 offset-sm-1">
+      <tr>
+        <td style="width:30%"><%= f.label :user_id, "ユーザーID" %></td>
+        <td style="width:70%"><%= f.text_field :user_id, autocomplete: "user_id", class: "w-50" %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :username, "ユーザーネーム" %></td>
+        <td><%= f.text_field :username, autocomplete: "username", class: "w-50" %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :email, "メールアドレス" %></td>
+        <td><%= f.email_field :email, autocomplete: "email", class: "w-50" %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :password, "パスワード (6文字以上)" %></td>
+        <td><%= f.password_field :password, autocomplete: "new-password", class: "w-50" %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :password_confirmation, "パスワード確認" %></td>
+        <td><%= f.password_field :password_confirmation, autocomplete: "new-password", class: "w-50" %></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><%= f.submit "登録する", class: "btn btn-primary px-5" %></td>
+      </tr>
+    </table>
   </div>
+  <% end %>
 
-  <div class="field">
-    <%= f.label :email, "メールアドレス" %>
-    <%= f.email_field :email, autocomplete: "email" %>
+  <div class="row d-flex flex-column mt-5">
+    <div class="col-auto offset-sm-2">
+      <p>アカウントをお持ちの方</p>
+    </div>
+    <div class="col-auto offset-sm-2">
+      <%= link_to "ログイン", new_user_session_path, class: "btn btn-outline-success" %>
+    </div>
   </div>
-
-  <div class="field">
-    <%= f.label :password, "パスワード" %>
-    <%= f.password_field :password, autocomplete: "new-password" %>
-    <% if @minimum_password_length %>
-      <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation, "パスワード確認" %>
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "登録する" %>
-  </div>
-<% end %>
-
-
-<p>アカウントをお持ちの方</p>
-<%= link_to "ログイン", new_user_session_path %>
+</div>
