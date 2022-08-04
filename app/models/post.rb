@@ -6,6 +6,20 @@ class Post < ApplicationRecord
   has_one_attached :post_image
 
 
+  validates :outer, :tops, :bottoms, :shoes, :bag, length: {maximum: 20}
+  validates :body, length: {maximum: 200}
+  validates :post_image, presence: true
+  validate if: :post_image do
+    if post_image.respond_to?(:content_type)
+      unless post_image.content_type.in?(ALLOWED_CONTENT_TYPES)
+        errors.add(:post_image, :invalid_image_type)
+      end
+    end
+  end
+
+
+
+
   def get_post_image(width, height)
     unless post_image.attached?
       file_path = Rails.root.join('app/assets/images/no_image.jpg')
