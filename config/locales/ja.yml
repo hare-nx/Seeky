@@ -20,7 +20,7 @@ ja:
         withdrawal: "退会"
 
 
-ja:
+
   activerecord:
     attributes:
       post:

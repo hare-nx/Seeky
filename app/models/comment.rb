@@ -3,6 +3,8 @@ class Comment < ApplicationRecord
   belongs_to :post
   has_many :reports, dependent: :destroy
 
+  validates :user_id, :post_id, :comment, presence: true
+  validates :comment, length: {maximum: 200}
 
 
   def reported_by?(user, comment)
