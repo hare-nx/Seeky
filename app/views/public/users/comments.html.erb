@@ -1,10 +1,13 @@
-<%= @comments.each do |comment| %>
-  <%= link_to post_path(comment.post) do %>
-    @<%= comment.post.user_id %>
-  <% end %>
-  <%= comment %>
+<% @comments.each do |comment| %>
+  <p>
+    reply_to:
+    <%= link_to post_path(comment.post) do %>
+      <%= comment.post.user_id %>
+    <% end %>
+  </p>
+  <%= comment.comment %>
   <%= comment.created_at.strftime("%Y.%m.%d   %H:%M:%S") %>
-  <%= link_to "削除", post_comment_path(comment) %>
+  <%= link_to "削除", post_comment_path(comment.post, comment) %>
 <% end %>
 
 

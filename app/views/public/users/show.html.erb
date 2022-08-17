@@ -1,49 +1,72 @@
-<%= image_tag @user.get_profile_image(80, 80) %>
-<%= @user.username %>
-<%= @user.user_id %>
-<P>
-  <%= @user.face_type_i18n if @user.face_type.present? %>
-  <% if @user.frame_type.present? %>
-    <%= "・" if @user.face_type.present? %><%= @user.frame_type_i18n %>
-  <% end %>
-  <% if @user.stature.present? %>
-    <%= "・" if (@user.face_type||@user.frame_type).present? %><%= @user.stature %>cm
-  <% end %>
-</P>
-<p><%= @user.introduction %>
+<div class="container-fluid py-5 my-5 px-0 mx-0">
+  <div class="row justify-content-center d-flex flex-column">
+    <div class="card w-75 px-3 pt-1 mx-auto">
+      <div class="card-body text-dark">
+        <div class="d-sm-flex">
+          <%= image_tag @user.get_profile_image(100, 100), class: "rounded-circle", style: "width:100px; height:100px;" %>
+          <div class="ml-sm-5 align-self-center">
+            <h4 class="font-weight-bold mt-2 mb-0"><%= @user.username %></h4>
+            <%= @user.user_id %>
+            <P class="card-text mt-2 small">
+              <%= @user.face_type_i18n if @user.face_type.present? %>
+              <% if @user.frame_type.present? %>
+                <%= "・" if @user.face_type.present? %><%= @user.frame_type_i18n %>
+              <% end %>
+              <% if @user.stature.present? %>
+                <%= "・" if (@user.face_type||@user.frame_type).present? %><%= @user.stature %>cm
+              <% end %>
+            </P>
+          </div>
+          <div class="ml-sm-auto mt-1">
+            <% if @user==current_user %>
+              <%= link_to "プロフィール編集", edit_user_path(current_user.user_id), class: "btn btn-outline-secondary" %>
+            <% else %>
+              <% if current_user.following?(@user) %>
+                <%= form_with model: @following_user, method: :delete do |f| %>
+                  <%= hidden_field_tag :follow_id, @user.user_id %>
+                  <%= f.submit 'フォロー中', class: "btn btn-primary" %>
+                <% end %>
+              <% else %>
+                <%= form_with model: @relationship do |f| %>
+                  <%= hidden_field_tag :follow_id, @user.user_id %>
+                  <%= f.submit 'フォロー', class: "btn btn-outline-primary" %>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+        <div>
+        <% if @user.introduction? %>
+          <p class="card-text mt-4 pt-1"><%= @user.introduction %></p>
+        <% end %>
+        <p class="mt-4">投稿<%= @user.posts.count %>件</p>
+        <p>
+          <%= link_to following_user_path(@user), class: "text-dark text-decoration-none" do %>
+            フォロー中<%= @user.relationships.count %>人
+          <% end %>
+          |
+          <%= link_to followers_user_path(@user), class: "text-dark text-decoration-none" do %>
+            フォロワー<%= @followers.count %>人
+          <% end %>
+        </p>
+        </div>
+      </div>
+    </div>
 
-<% if @user==current_user %>
-  <%= link_to "プロフィール編集", edit_user_path(current_user.user_id) %>
-<% else %>
-  <% if current_user.following?(@user) %>
-    <%= form_with model: @following_user, method: :delete do |f| %>
-      <%= hidden_field_tag :follow_id, @user.user_id %>
-      <%= f.submit 'フォロー中' %>
-    <% end %>
-  <% else %>
-    <%= form_with model: @relationship do |f| %>
-      <%= hidden_field_tag :follow_id, @user.user_id %>
-      <%= f.submit 'フォロー' %>
-    <% end %>
-  <% end %>
-<% end %>
+    <div class="mt-4 d-flex flex-column w-75 mx-auto">
+      <div class="text-center pb-3 border-bottom">
+        <%= link_to "いいね一覧", favorites_user_path(current_user.user_id), class: "text-dark text-decoration-none" if (@user==current_user)&&(@user.favorites.present?) %>
+        <%= link_to "コメント一覧", comments_user_path(current_user.user_id), class: "text-dark text-decoration-none" if (@user==current_user)&&(@user.comments.present?) %>
+      </div>
+      <div class="mt-4 mx-auto d-flex flex-wrap">
 
-<p>投稿<%= @user.posts.count %>件</p>
-<p>
-  <%= link_to following_user_path(@user) do %>
-    フォロー中<%= @user.relationships.count %>人
-  <% end %>
-  |
-  <%= link_to followers_user_path(@user) do %>
-    フォロワー<%= @followers.count %>人
-  <% end %>
-</p>
+        <% @posts.each do |post| %>
+          <%= link_to post_path(post.id), class: "w-25" do %>
+            <%= image_tag post.post_image.variant(resize: "300^", gravity: "center", crop: "300x300+0+0").processed, style: "width:100%" %>
+          <% end %>
+        <% end %>
 
-<%= link_to "いいね", favorites_user_path(current_user.user_id) if (@user==current_user)&&(@user.favorites.present?) %>
-<%= link_to "コメント", comments_user_path(current_user.user_id) if (@user==current_user)&&(@user.comments.present?) %>
-
-<% @posts.each do |post| %>
-  <%= link_to post_path(post.id) do %>
-    <%= image_tag post.get_post_image(200, 300) %>
-  <% end %>
-<% end %>
+      </div>
+    </div>
+  </div>
+</div>

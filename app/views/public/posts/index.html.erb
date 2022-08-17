@@ -1,11 +1,75 @@
-<% unless current_user.relationships.present? %>
-  <p><%= @recommendation %></p>
-<% end %>
+<div class="container-fluid py-5 my-5 mx-0 px-0">
+  <div class="row mb-5 px-5">
+    <% unless current_user.relationships.present? %>
+      <p class="ml-5"><%= @recommendation %></p>
+    <% end %>
 
-<%# ユーザーを探す %>
+    <%# ユーザーを探す %>
+  </div>
+  <div class="row justify-content-center w-75 mx-auto">
+    <% @posts.each do |post| %>
+        <div class="card w-75">
+          <div class="card-header d-flex align-items-center">
+            <%= link_to user_path(post.user) do %>
+              <%= image_tag post.user.get_profile_image(80, 80), class: "rounded-circle" %>
+            <% end %>
+            <%= link_to "#{post.user.username}", user_path(post.user), class: "ml-3 text-dark" %>
 
-<% @posts.each do |post| %>
-  <%= link_to post_path(post) do %>
-    <%= image_tag post.get_post_image(300, 400) %>
-  <% end %>
-<% end %>
+            <% if user_signed_in? %>
+              <div class="dropdown ml-auto">
+                <button class="btn btn-light" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fa-solid fa-ellipsis"></i>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <% if post.user==current_user %>
+                    <li class="dropdown-item"><%= link_to "編集する", edit_post_path(post), class: "text-dark" %></li>
+                    <li class="dropdown-item"><%= link_to "削除", post_path(post), method: :delete, class: "text-dark" %></li>
+                  <% end %>
+                  <% if post.reported_by?(current_user, post) %>
+                    <li class="dropdown-item"><%= link_to "通報を取り消す", post_reports_path(post), method: :delete, class: "text-dark" unless post.user==current_user %></li>
+                  <% else %>
+                    <li class="dropdown-item"><%= link_to "通報する", post_reports_path(post), method: :post, class: "text-dark" unless post.user==current_user %></li>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+
+          <%= image_tag post.post_image, style: "object-fit:scale-down", class: "card-img-top" %>
+
+          <div class="card-body h-100 p-4">
+            <p class="my-2"><%= post.body %></p>
+
+            <div>
+              <%= post.user.face_type_i18n if post.user.face_type.present? %> /
+              <%= post.user.frame_type_i18n if post.user.frame_type.present? %> /
+              <%= "#{post.user.stature}cm" if post.user.stature.present? %>
+            </div>
+            <p class="my-4"><%= post.created_at.strftime("%Y.%m.%d  %H:%M") %></p>
+
+            <div>
+              <% if post.favorited_by?(current_user) %>
+                <%= link_to post_favorites_path(post), class: "text-decoration-none", method: :delete do %>
+                  <i class="fa-solid fa-heart" style="color:red"></i>
+                <% end %>
+              <% else %>
+                <%= link_to post_favorites_path(post), class: "text-decoration-none", method: :post do %>
+                  <i class="fa-regular fa-heart text-dark"></i>
+                <% end %>
+              <% end %>
+              <label for="comment_comment"><i class="fa-regular fa-comment ml-3"></i></label>
+            </div>
+            <div class="mt-3 d-flex">
+              <div>
+                <p class="mb-1">いいね! <%= post.favorites.count %>件</p>
+                <p>コメント <%= post.comments.count %>件</p>
+              </div>
+              <div class="ml-auto align-self-end">
+                <%= link_to "詳細を表示 >>", post_path(post) %>
+              </div>
+            </div>
+          </div>
+        </div>
+    <% end %>
+  </div>
+</div>
