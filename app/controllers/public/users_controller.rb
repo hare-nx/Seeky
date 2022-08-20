@@ -31,16 +31,24 @@ class Public::UsersController < ApplicationController
   end
 
   def favorites
+    @user=User.find(params[:user_id])
+    @following_user=current_user.relationships.find_by(follow_id: @user.user_id)
+    @relationship=Relationship.new
+    @followers=Relationship.where(follow_id: @user.user_id)
+    favorites=Favorite.where(user_id: @user.user_id).pluck(:post_id)
+    @posts=Post.find(favorites)
   end
 
   def following
     @user=User.find(params[:user_id])
     @users=@user.followings
+    @followers=Relationship.where(follow_id: @user.user_id)
   end
 
   def followers
     @user=User.find(params[:user_id])
     @users=@user.followers
+    @followers=Relationship.where(follow_id: @user.user_id)
   end
 
   def comments
@@ -64,7 +72,7 @@ class Public::UsersController < ApplicationController
     c=answers.count("C")
     if a>b&&a>c
       @result=User.frame_types.key(0)
-      @result_ja=User.frame_types_i18n[:stra]
+      @result_ja=User.frame_types_i18n[:straight]
     elsif b>a&&b>c
       @result=User.frame_types.key(1)
       @result_ja=User.frame_types_i18n[:wave]

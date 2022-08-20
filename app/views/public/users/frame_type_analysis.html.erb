@@ -1,13 +1,27 @@
-<span>身体的特徴について、当てはまる項目を1つずつ選択してください。</span>
-<%= form_with url: frame_type_result_user_path(current_user.user_id), method: :post do |f| %>
-  <% @frame_questions.each do |q| %>
-    <p><%= q.title %></p>
-    <%= f.radio_button :"#{q.id}", "A", checked: true %>
-    <%= f.label :"#{q.id}", "#{q.straight}" %>
-    <%= f.radio_button :"#{q.id}", "B" %>
-    <%= f.label :"#{q.id}", "#{q.wave}" %>
-    <%= f.radio_button :"#{q.id}", "C" %>
-    <%= f.label :"#{q.id}", "#{q.natural}" %>
-  <% end %>
-  <%= f.submit "結果を見る" %>
-<% end %>
+<div class="container-fluid py-5 my-5 mx-0 px-0">
+  <div class="row mb-5 px-5">
+    <p class="ml-5 pl-5 mb-5" style="background: linear-gradient(transparent 60%, #ffffa8 0%);">身体的特徴について、当てはまる項目を1つずつ選択してください。</p>
+    <%= form_with url: frame_type_result_user_path(current_user.user_id), method: :post, class: "w-75 mx-auto" do |f| %>
+      <% @frame_questions.each_with_index do |q, i| %>
+        <div class="mb-5">
+          <span style="background: linear-gradient(transparent 60%, #ffffa8 0%);">Q<%= i+1 %> <%= q.title %>...?</span>
+          <div class="d-sm-flex">
+            <div class="col-sm-4 d-flex flex-sm-nowrap align-items-center">
+              <%= f.radio_button :"#{q.id}", "A", checked: true, style: "accent-color:orange;" %>
+              <%= f.label :"#{q.id}", "#{q.straight}", class: "ml-2 mb-0" %>
+            </div>
+            <div class="col-sm-4 d-flex flex-nowrap align-items-center">
+              <%= f.radio_button :"#{q.id}", "B", style: "accent-color:orange;" %>
+              <%= f.label :"#{q.id}", "#{q.wave}", class: "ml-2 mb-0" %>
+            </div>
+            <div class="col-sm-4 d-flex flex-nowrap align-items-center">
+              <%= f.radio_button :"#{q.id}", "C", style: "accent-color:orange;" %>
+              <%= f.label :"#{q.id}", "#{q.natural}", class: "ml-2 mb-0" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      <%= f.submit "結果を見る", class: "btn btn-outline-warning" %>
+    <% end %>
+  </div>
+</div>

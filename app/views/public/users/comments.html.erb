@@ -1,13 +1,21 @@
-<% @comments.each do |comment| %>
-  <p>
-    reply_to:
-    <%= link_to post_path(comment.post) do %>
-      <%= comment.post.user_id %>
-    <% end %>
-  </p>
-  <%= comment.comment %>
-  <%= comment.created_at.strftime("%Y.%m.%d   %H:%M:%S") %>
-  <%= link_to "削除", post_comment_path(comment.post, comment) %>
-<% end %>
+<div class="container-fluid py-5 my-5 px-0 mx-0">
+  <div class="row justify-content-center d-flex flex-column">
+    <div class="list-group w-75 mx-auto">
+      <% @comments.each do |comment| %>
+        <div class="list-group-item list-group-item-action">
+          <p class="mb-0">
+            reply_to:
+            <%= link_to post_path(comment.post) do %>
+              <%= comment.post.user_id %>
+            <% end %>
+          </p>
+          <p class="mb-1"><%= comment.comment %></p>
+          <%= comment.created_at.strftime("%Y.%m.%d   %H:%M:%S") %>
+          <%= link_to "削除", post_comment_path(comment.post, comment), class: "text-danger ml-3" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
 
 

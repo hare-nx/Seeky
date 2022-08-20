@@ -1,48 +1,78 @@
-<h1>アカウントを登録しました！</h1>
-<div>
-  <p>顔と骨格のタイプを設定すると、あなたのタイプに合ったおすすめの投稿を見ることができます。</p>
-  <p>
-    下の「診断を始める」から、顔・骨格タイプのセルフチェックを行ってください。<br>
-    すでに自身のタイプをご存じの方は、下記項目から選択し、設定を行うこともできます。
-  </p>
-</div>
-<%= link_to "診断を始める", frame_type_analysis_user_path(current_user.user_id) %>
-<%= link_to "スキップして投稿を見る", root_path %>
-
-<div>
-  <p>顔と骨格のタイプを1つずつ選択してください。</p>
-  <%= form_with model: @user do |f| %>
-  <div>
-    <p>顔タイプ</p>
-    <%= f.radio_button :face_type, User.face_types.key(0) %>
-    <%= f.label :face_type, User.face_types_i18n[:cute] %>
-    <%= f.radio_button :face_type, User.face_types.key(1) %>
-    <%= f.label :face_type, User.face_types_i18n[:active_cute] %>
-    <%= f.radio_button :face_type, User.face_types.key(2) %>
-    <%= f.label :face_type, User.face_types_i18n[:flesh] %>
-    <%= f.radio_button :face_type, User.face_types.key(3) %>
-    <%= f.label :face_type, User.face_types_i18n[:cool_casual] %>
-    <%= f.radio_button :face_type, User.face_types.key(4) %>
-    <%= f.label :face_type, User.face_types_i18n[:feminin] %>
-    <%= f.radio_button :face_type, User.face_types.key(5) %>
-    <%= f.label :face_type, User.face_types_i18n[:cool] %>
-    <%= f.radio_button :face_type, User.face_types.key(6) %>
-    <%= f.label :face_type, User.face_types_i18n[:elegant] %>
-    <%= f.radio_button :face_type, User.face_types.key(7) %>
-    <%= f.label :face_type, User.face_types_i18n[:soft_elegant] %>
+<div class="container-fruid p-5 m-5">
+  <div class="row mb-5">
+    <h4 class="offset-sm-2">アカウントを登録しました！</h4>
   </div>
-  <div>
-    <p>骨格タイプ</p>
-    <%= f.radio_button :frame_type, User.frame_types.key(0) %>
-    <%= f.label :frame_type, User.frame_types_i18n[:straight] %>
-    <%= f.radio_button :frame_type, User.frame_types.key(1) %>
-    <%= f.label :frame_type, User.frame_types_i18n[:wave] %>
-    <%= f.radio_button :frame_type, User.frame_types.key(2) %>
-    <%= f.label :frame_type, User.frame_types_i18n[:natural] %>
-  </div>
-  <%= f.submit "設定する" %>
-  <% end %>
-</div>
+  <div class="row justify-content-center">
+    <div class="text-center p-5 mb-5">
+      <p><span style="background:linear-gradient(transparent 70%, #FFFF00 0%);">顔と骨格のタイプを設定すると、あなたのタイプに合ったおすすめの投稿を見ることができます。</span></p>
+      <p>
+        下の「診断を始める」から、顔・骨格タイプのセルフチェックを行ってください。<br>
+        すでに自身のタイプをご存じの方は、下記項目から選択し、設定を行うこともできます。
+      </p>
+      <div class="row justify-content-around mt-4">
+        <div class="col-auto"><%= link_to "診断を始める", frame_type_analysis_user_path(current_user.user_id), class: "text-decoration-none btn btn-outline-warning" %></div>
+        <div class="col-auto"><%= link_to "スキップして投稿を見る", root_path, class: "text-decoration-none btn btn-outline-secondary" %></div>
+      </div>
+    </div>
 
+
+    <%= form_with model: @user, url: user_path(@user) do |f| %>
+    <div class="bg-light p-4 mb-4">
+      <p>顔と骨格のタイプを1つずつ選択してください。</p>
+      <p>顔タイプ</p>
+      <div class="d-flex flex-wrap mb-3">
+        <div class="col-3">
+          <%= f.radio_button :face_type, User.face_types.key(0) %>
+          <%= f.label :face_type, User.face_types_i18n[:cute] %>
+        </div>
+        <div class="col-3">
+          <%= f.radio_button :face_type, User.face_types.key(1) %>
+          <%= f.label :face_type, User.face_types_i18n[:active_cute] %>
+        </div>
+        <div class="col-3">
+          <%= f.radio_button :face_type, User.face_types.key(2) %>
+          <%= f.label :face_type, User.face_types_i18n[:flesh] %>
+        </div>
+        <div class="col-3">
+          <%= f.radio_button :face_type, User.face_types.key(3) %>
+          <%= f.label :face_type, User.face_types_i18n[:cool_casual] %>
+        </div>
+        <div class="col-3">
+          <%= f.radio_button :face_type, User.face_types.key(4) %>
+          <%= f.label :face_type, User.face_types_i18n[:feminin] %>
+        </div>
+        <div class="col-3">
+          <%= f.radio_button :face_type, User.face_types.key(5) %>
+          <%= f.label :face_type, User.face_types_i18n[:cool] %>
+        </div>
+        <div class="col-3">
+          <%= f.radio_button :face_type, User.face_types.key(6) %>
+          <%= f.label :face_type, User.face_types_i18n[:elegant] %>
+        </div>
+        <div class="col-3">
+          <%= f.radio_button :face_type, User.face_types.key(7) %>
+          <%= f.label :face_type, User.face_types_i18n[:soft_elegant] %>
+        </div>
+      </div>
+      <p>骨格タイプ</p>
+      <div class="d-flex">
+        <div class="col-3">
+          <%= f.radio_button :frame_type, User.frame_types.key(0) %>
+          <%= f.label :frame_type, User.frame_types_i18n[:straight] %>
+        </div>
+        <div class="col-3">
+          <%= f.radio_button :frame_type, User.frame_types.key(1) %>
+          <%= f.label :frame_type, User.frame_types_i18n[:wave] %>
+        </div>
+        <div class="col-3">
+          <%= f.radio_button :frame_type, User.frame_types.key(2) %>
+          <%= f.label :frame_type, User.frame_types_i18n[:natural] %>
+        </div>
+      </div>
+      <%= f.submit "設定する", class: "btn btn-primary mt-4" %>
+    </div>
+    <% end %>
+  </div>
+</div>
 
 

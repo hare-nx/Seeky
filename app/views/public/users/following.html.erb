@@ -1,20 +1,17 @@
-<h2>フォロー中</h2>
-<h2><%= link_to "フォロワー", followers_user_path(@user) %></h2>
-
-<% @users.each do |user| %>
-  <%= link_to user_path(user) do %>
-    <%= image_tag user.get_profile_image(80, 80) %>
-    <%= user.username %>
-    <%= user.user_id %>
-    <P>
-      <%= user.face_type_i18n if user.face_type.present? %>
-      <% if user.frame_type.present? %>
-        <%= "・" if user.face_type.present? %><%= user.frame_type_i18n %>
-      <% end %>
-      <% if user.stature.present? %>
-        <%= "・" if (user.face_type||user.frame_type).present? %><%= user.stature %>cm
-      <% end %>
-    </P>
-    <%= user.introduction %>
-  <% end %>
-<% end %>
+<div class="container-fluid py-5 my-5 px-0 mx-0">
+  <div class="row justify-content-center d-flex flex-column">
+    <div class="card w-75 px-3 pt-1 mx-auto">
+      <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs nav-fill">
+          <li class="nav-item">
+            <%= link_to "フォロー中 (#{@user.relationships.count})", following_user_path(@user), class: "nav-link active font-weight-bold text-dark text-decoration-none" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "フォロワー (#{@followers.count})", followers_user_path(@user), class: "nav-link font-weight-bold text-dark text-decoration-none" %>
+          </li>
+        </ul>
+      </div>
+      <%= render 'relationship', users: @users %>
+    </div>
+  </div>
+</div>

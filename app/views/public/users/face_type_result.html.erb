@@ -1,9 +1,15 @@
-<h1>診断結果</h1>
-<%= @result_ja %>
-
-<%= link_to "診断し直す", face_type_analysis_user_path(current_user.user_id) %>
-<%= form_with model: @user do |f| %>
-  <%= f.hidden_field :face_type, :value => @result %>
-  <%= f.submit "保存して顔タイプの診断に進む" %>
-<% end %>
-<%= link_to "戻る", user_path(current_user.user_id) %>
+<div class="container-fruid py-5 my-5 mx-0 px-0">
+  <div class="row justify-content-center">
+    <p class="text-center">あなたの顔タイプは<span style="background: linear-gradient(transparent 60%, #ffff00 0%);"><%= @result_ja %></span>です。</p>
+  </div>
+  <div class="row justify-content-center my-5 pb-5">
+    <%= link_to "診断し直す", face_type_analysis_user_path(current_user.user_id), class: "btn btn-outline-warning rounded-0" %>
+    <%= form_with model: @user do |f| %>
+      <%= f.hidden_field :face_type, :value => @result %>
+      <%= f.submit "保存する", class: "btn btn-warning rounded-0" %>
+    <% end %>
+  </div>
+  <div class="row justify-content-center mt-5 pt-5">
+    <%= link_to "戻る", user_path(current_user.user_id), class: "pt-5" %>
+  </div>
+</div>

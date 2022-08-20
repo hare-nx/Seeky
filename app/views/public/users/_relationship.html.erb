@@ -1,0 +1,25 @@
+<div class="card-body">
+  <div class="list-group-flush text-dark">
+    <% users.each do |user| %>
+      <%= link_to user_path(user), class: "text-decoration-none list-group-item list-group-item-action d-flex" do %>
+        <%= image_tag user.get_profile_image(80, 80), class: "rounded-circle", style: "width:80px; height:80px;" %>
+        <div class="ml-3">
+          <div class="d-flex">
+            <p class="font-weight-bold mb-0"><%= user.username %></p>
+            <small class="ml-5" style="background: linear-gradient(transparent 60%, #ffffa8 0%);">
+              <%= user.face_type_i18n if user.face_type.present? %>
+              <% if user.frame_type.present? %>
+                <%= "・" if user.face_type.present? %><%= user.frame_type_i18n %>
+              <% end %>
+              <% if user.stature.present? %>
+                <%= "・" if (user.face_type||user.frame_type).present? %><%= user.stature %>cm
+              <% end %>
+            </small>
+          </div>
+          <p><%= user.user_id %></p>
+          <%= user.introduction %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

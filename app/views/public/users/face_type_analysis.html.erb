@@ -1,13 +1,25 @@
-<span>顔の特徴について、当てはまる項目を1つずつ選択してください。</span>
-<%= form_with url: face_type_result_user_path(current_user.user_id), method: :post do |f| %>
-  <% @face_questions.each do |q| %>
-      <p><%= q.title %></p>
-      <%= f.radio_button :"#{q.id}", "子ども", checked: true if q.generation_or_shape==true %>
-      <%= f.radio_button :"#{q.id}", "曲線", checked: true if q.generation_or_shape==false %>
-      <%= f.label :"#{q.id}", "#{q.answer_1}" %>
-      <%= f.radio_button :"#{q.id}", "大人" if q.generation_or_shape==true %>
-      <%= f.radio_button :"#{q.id}", "直線" if q.generation_or_shape==false %>
-      <%= f.label :"#{q.id}", "#{q.answer_2}" %>
-  <% end %>
-  <%= f.submit "結果を見る" %>
-<% end %>
+<div class="container-fluid py-5 my-5 mx-0 px-0">
+  <div class="row mb-5 px-5">
+    <p class="ml-5 pl-5 mb-5" style="background: linear-gradient(transparent 60%, #ffffa8 0%);">顔の特徴について、当てはまる項目を1つずつ選択してください。</p>
+    <%= form_with url: face_type_result_user_path(current_user.user_id), method: :post, class: "w-75 mx-auto" do |f| %>
+      <% @face_questions.each_with_index do |q, i| %>
+        <div class="mb-5">
+          <span style="background: linear-gradient(transparent 60%, #ffffa8 0%);">Q<%= i+1 %> <%= q.title %>...?</span>
+          <div class="d-sm-flex">
+            <div class="col-sm-6 d-flex flex-sm-nowrap align-items-center">
+              <%= f.radio_button :"#{q.id}", "子ども", checked: true, style: "accent-color:orange;" if q.generation_or_shape==true %>
+              <%= f.radio_button :"#{q.id}", "曲線", checked: true, style: "accent-color:orange;" if q.generation_or_shape==false %>
+              <%= f.label :"#{q.id}", "#{q.answer_1}", class: "ml-2 mb-0" %>
+            </div>
+            <div class="col-sm-6 d-flex flex-nowrap align-items-center">
+              <%= f.radio_button :"#{q.id}", "大人", style: "accent-color:orange;" if q.generation_or_shape==true %>
+              <%= f.radio_button :"#{q.id}", "直線", style: "accent-color:orange;" if q.generation_or_shape==false %>
+              <%= f.label :"#{q.id}", "#{q.answer_2}", class: "ml-2 mb-0" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      <%= f.submit "結果を見る", class: "btn btn-outline-warning" %>
+    <% end %>
+  </div>
+</div>
