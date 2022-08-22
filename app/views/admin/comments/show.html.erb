@@ -1,37 +1,49 @@
-<h1>コメント詳細</h1>
-<table>
-  <tr>
-    <td>コメント投稿日</td>
-    <td><%= @comment.created_at.strftime("%Y/%m/%d %H:%M") %></td>
-  </tr>
-  <tr>
-    <td>ユーザーID</td>
-    <td>
-      <%= link_to admin_user_path(@comment.user) do %>
-        <%= @comment.user_id %>
-      <% end %>
-    </td>
-  </tr>
-  <tr>
-    <td>ユーザーネーム</td>
-    <td><%= @comment.user.username %></td>
-  </tr>
-  <tr>
-    <td>コメント内容</td>
-    <td><%= @comment.comment %></td>
-  </tr>
-  <tr>
-    <td>通報された回数</td>
-    <td><%= @comment.user.number_of_reported_comments(@comment.user) %></td>
-  </tr>
-  <tr>
-    <td>ステータス</td>
-    <td>
-      <%= form_with model: @comment, url: admin_comment_path(@comment) do |f| %>
-        <%= f.select :status, {"表示": true, "非表示": false} %>
-        <%= f.submit "更新" %>
-      <% end %>
-    </td>
-  </tr>
-</table>
-<%= link_to "対象の投稿詳細>", admin_post_path(@comment.post) %>
+<div class="container-fruid p-5 m-5">
+  <div class="row mb-5">
+    <h4 class="offset-sm-2">コメント詳細</h4>
+  </div>
+  <div class="row d-flex">
+    <table class="col-sm-6 offset-sm-2 col table-borderless table">
+      <tr>
+        <td>コメント投稿日</td>
+        <td><%= @comment.created_at.strftime("%Y/%m/%d %H:%M") %></td>
+      </tr>
+      <tr>
+        <td>ユーザーID</td>
+        <td>
+          <%= link_to admin_user_path(@comment.user), class: "text-decoration-none text-dark" do %>
+            <%= @comment.user_id %>
+          <% end %>
+        </td>
+        </tr>
+      <tr>
+        <td>ユーザーネーム</td>
+        <td>
+          <%= link_to admin_user_path(@comment.user), class: "text-decoration-none text-dark" do %>
+            <%= @comment.user.username %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td>コメント内容</td>
+        <td><%= @comment.comment %></td>
+      </tr>
+      <tr>
+        <td>通報された回数</td>
+        <td><%= @comment.user.number_of_reported_comments(@comment.user) %></td>
+      </tr>
+      <tr>
+        <td style="vertical-align: middle;">ステータス</td>
+        <td>
+          <%= form_with model: @comment, url: admin_comment_path(@comment) do |f| %>
+            <%= f.select :status, {"表示": true, "非表示": false}, {}, style: "vertical-align: middle;" %>
+            <%= f.submit "更新", class: "btn btn-primary btn-sm", style: "vertical-align: middle;" %>
+          <% end %>
+        </td>
+      </tr>
+    </table>
+    <div class="ml-4">
+      <%= link_to "対象の投稿詳細", admin_post_path(@comment.post), class: "btn btn-outline-info" %>
+    </div>
+  </div>
+</div>

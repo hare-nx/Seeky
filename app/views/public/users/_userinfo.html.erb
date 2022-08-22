@@ -61,7 +61,7 @@
       <div class="mt-4 mx-auto d-flex flex-wrap w-100">
         <% posts.each do |post| %>
           <%= link_to post_path(post.id), class: "w-25" do %>
-            <%= image_tag post.post_image.variant(resize: "300^", gravity: "center", crop: "300x300+0+0").processed, style: "width:100%" %>
+            <%= image_tag post.post_image.variant(resize: "450^", gravity: "center", crop: "300x300+0+0").processed, style: "width:100%" %>
           <% end %>
         <% end %>
       </div>

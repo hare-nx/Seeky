@@ -1,51 +1,27 @@
-
-  <p>キーワード検索</p>
-  <%= search_form_for @q, url: search_path do |f| %>
-    <%= f.search_field :outer_or_tops_or_bottoms_or_shoes_or_bag_or_body_cont, placeholder: "服の種類/ブランド名" %>
-    <%= f.search_field :user_username_or_user_user_id_cont, placeholder: "ユーザーID/ユーザーネーム" %>
-    <%= f.submit "検索" %>
-  <% end %>
-  <div>
-  <p>詳細検索</p>
-  <%= search_form_for @q, url: search_path do |f| %>
-    <%= f.search_field :outer_or_tops_or_bottoms_or_shoes_or_bag_or_body_cont, placeholder: "キーワードを追加する" %>
-    <span>身長</span>
-    <%= f.number_field :user_stature_gteq, placeholder: "例) 140" %>
-    <span>～</span>
-    <%= f.number_field :user_stature_lteq, placeholder: "例) 145" %>
-    <span>㎝</span>
-    <div>
-    <span>顔タイプ</span><br>
-    <% User.face_types.each do |k| %>
-      <%= f.check_box :user_face_type_in, {multiple: true}, k[1], nil %>
-      <%= f.label "#{User.face_types_i18n[:"#{k[0]}"]}" %>
-    <% end %>
+<div class="container-fluid my-5 px-0 mx-0">
+  <div class="row justify-content-center mx-5 flex-sm-nowrap">
+    <%= render 'search', q: @q %>
+    <div class="col-sm-9 mx-2">
+      <% if @results.present? %>
+        <div class="d-flex flex-wrap">
+          <% @results.each do |post| %>
+            <%= link_to post_path(post), class: "w-25" do %>
+              <%= image_tag post.post_image.variant(resize: "450^", gravity: "center", crop: "300x300+0+0").processed, style: "width:100%" %>
+            <% end %>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="mb-5">
+          <p>一致する投稿がありません。条件を変えて検索してください。</p>
+        </div>
+        <div class="d-flex flex-wrap">
+          <% Post.all.each do |post| %>
+            <%= link_to post_path(post), class: "w-25" do %>
+              <%= image_tag post.post_image.variant(resize: "450^", gravity: "center", crop: "300x300+0+0").processed, style: "width:100%" %>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
     </div>
-    <div>
-    <span>骨格</span><br>
-    <% User.frame_types.each do |k| %>
-      <%= f.check_box :user_frame_type_in, {multiple: true}, k[1], nil %>
-      <%= f.label "#{User.frame_types_i18n[:"#{k[0]}"]}" %>
-    <% end %>
-    <div><%= f.submit "検索" %></div>
-    </div>
-  <% end %>
-
-
-
-<% if @results.present? %>
-  <% @results.each do |post| %>
-    <%= link_to post_path(post) do %>
-      <%= image_tag post.get_post_image(300, 400) %>
-    <% end %>
-  <% end %>
-<% else %>
-  <div>
-    <p>一致する投稿がありません。条件を変えて検索してください。</p>
   </div>
-  <% Post.all.each do |post| %>
-    <%= link_to post_path(post) do %>
-      <%= image_tag post.get_post_image(300, 400) %>
-    <% end %>
-  <% end %>
-<% end %>
+</div>

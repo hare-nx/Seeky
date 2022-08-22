@@ -1,32 +1,41 @@
-<table>
-  <tr>
-    <th>コメント投稿日</th>
-    <th>ユーザーID</th>
-    <th>コメント内容</th>
-    <th>ステータス</th>
-    <th></th>
-  </tr>
-  <% @comments.each do |comment| %>
-  <tr>
-    <td>
-      <%= link_to admin_comment_path(comment) do %>
-        <%= comment.created_at.strftime("%Y/%m/%d %H:%M") %>
+<div class="container-fruid p-5 m-5">
+  <div class="row mb-5">
+    <h4 class="offset-sm-2">コメント一覧</h4>
+  </div>
+  <div class="mb-5 justify-content-center">
+    <table class="table offset-sm-2 col-sm-8 table-hover text-dark">
+      <thead class="thead-light">
+        <tr>
+          <th>コメント投稿日</th>
+          <th>ユーザーID</th>
+          <th>コメント内容</th>
+          <th>ステータス</th>
+          <th></th>
+        </tr>
+      </thead>
+      <% @comments.each do |comment| %>
+        <tr>
+          <td style="vertical-align: middle;">
+            <%= link_to admin_comment_path(comment), class: "text-decoration-none text-dark" do %>
+              <%= comment.created_at.strftime("%Y/%m/%d %H:%M") %>
+            <% end %>
+          </td>
+          <td style="vertical-align: middle;">
+            <%= link_to admin_user_path(comment.user), class: "text-decoration-none text-dark" do %>
+              <%= comment.user_id %>
+            <% end %>
+          </td>
+          <td style="vertical-align: middle;"><%= comment.comment %></td>
+          <td style="vertical-align: middle;">
+            <% if comment.status? %>
+              <span class="font-weight-bold text-success">表示</span>
+            <% else %>
+              <span class="font-weight-bold text-muted">非表示<span class="font-weight-bold text-muted">
+            <% end %>
+          </td>
+          <td style="vertical-align: middle;"><%= link_to "対象の投稿詳細", admin_post_path(comment.post), class: "btn btn-outline-info btn-sm" %></td>
+        </tr>
       <% end %>
-    </td>
-    <td>
-      <%= link_to admin_user_path(comment.user) do %>
-        <%= comment.user_id %>
-      <% end %>
-    </td>
-    <td><%= comment.comment %></td>
-    <td>
-      <% if comment.status? %>
-        表示
-      <% else %>
-        非表示
-      <% end %>
-    </td>
-    <td><%= button_to "対象の投稿詳細", admin_post_path(comment.post) %></td>
-  </tr>
-  <% end %>
-</table>
+    </table>
+  </div>
+</div>

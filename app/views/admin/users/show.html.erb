@@ -1,40 +1,51 @@
-<h1>アカウント情報</h1>
-<table>
-  <tr>
-    <td>ユーザーID</td>
-    <td><%= @user.user_id %></td>
-  </tr>
-  <tr>
-    <td>ユーザーネーム</td>
-    <td><%= @user.username %></td>
-  </tr>
-  <tr>
-    <td>アカウント作成日</td>
-    <td><%= @user.created_at.strftime("%Y/%m/%d") %></td>
-  </tr>
-  <tr>
-    <td>メールアドレス</td>
-    <td><%= @user.email %></td>
-  </tr>
-  <tr>
-    <td>通報された投稿数</td>
-    <td><%= @user.number_of_reported_posts(@user) %></td>
-  </tr>
-  <tr>
-    <td>通報されたコメント数</td>
-    <td><%= @user.number_of_reported_comments(@user) %></td>
-  </tr>
-  <tr>
-    <td>ステータス</td>
-    <td>
-      <%= form_with model: @user, url: admin_user_path(@user) do |f| %>
-        <%= f.select :status, User.statuses_i18n.invert, {} %>
-        <%= f.submit "更新" %>
-      <% end %>
-    </td>
-  </tr>
-</table>
-
-<% @user.posts.each do |post| %>
-  <%= image_tag post.get_post_image(300, 400) %>
-<% end %>
+<div class="container-fruid p-5 m-5">
+  <div class="row mb-5">
+    <h4 class="offset-sm-2">アカウント情報</h4>
+  </div>
+  <div class="row">
+    <table class="col-sm-6 offset-sm-1 col table-borderless table">
+      <tr>
+        <td>ユーザーID</td>
+        <td><%= @user.user_id %></td>
+      </tr>
+      <tr>
+        <td>ユーザーネーム</td>
+        <td><%= @user.username %></td>
+      </tr>
+      <tr>
+        <td>アカウント作成日</td>
+        <td><%= @user.created_at.strftime("%Y/%m/%d") %></td>
+      </tr>
+      <tr>
+        <td>メールアドレス</td>
+        <td><%= @user.email %></td>
+      </tr>
+      <tr>
+        <td>通報された投稿数</td>
+        <td><%= @user.number_of_reported_posts(@user) %></td>
+      </tr>
+      <tr>
+        <td>通報されたコメント数</td>
+        <td><%= @user.number_of_reported_comments(@user) %></td>
+      </tr>
+      <tr>
+        <td style="vertical-align: middle;">ステータス</td>
+        <td>
+          <%= form_with model: @user, url: admin_user_path(@user) do |f| %>
+            <%= f.select :status, User.statuses_i18n.invert, {}, style: "vertical-align: middle;" %>
+            <%= f.submit "更新", class: "btn btn-primary btn-sm" %>
+          <% end %>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="row mt-5">
+    <div class="mx-auto d-flex flex-wrap w-75">
+        <% @user.posts.each do |post| %>
+          <%= link_to admin_post_path(post.id), class: "w-25" do %>
+            <%= image_tag post.post_image.variant(resize: "450^", gravity: "center", crop: "300x300+0+0").processed, style: "width:100%" %>
+          <% end %>
+        <% end %>
+      </div>
+  </div>
+</div>

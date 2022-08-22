@@ -1,35 +1,32 @@
-<div class="container-fluid p-5 mb-5">
-  <div class="row h5 pb-4">
-    <div class="text-center col-auto bg-light offset-sm-2 h-25">管理者ログイン</div>
+<div class="container-fluid p-5 m-5">
+  <div class="row mb-5">
+    <h4 class="offset-sm-2">管理者ログイン</h4>
   </div>
 
   <%= form_with model: @admin, url: admin_session_path do |f| %>
+    <div class="row mb-3 justify-content-center">
+      <div class="col-sm-2">
+        <%= f.label :email, "メールアドレス" %>
+      </div>
+      <div class="col-sm-4">
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "sample@example.com", class: "w-75" %>
+      </div>
+    </div>
 
-  <div class="field row justify-content-center mb-2">
-    <div class="col-sm-2">
-      <%= f.label :email, "メールアドレス" %>
+    <div class="row mb-2 justify-content-center mb-4">
+      <div class="col-sm-2">
+        <%= f.label :password, "パスワード" %>
+      </div>
+      <div class="col-sm-4">
+        <%= f.password_field :password, autocomplete: "current-password", class: "w-75" %>
+      </div>
     </div>
-    <div class="col-sm-4 w-100">
-      <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "sample@example.com", class: "w-75" %>
-    </div>
-  </div>
 
-  <div class="field row justify-content-center mb-4">
-    <div class="col-sm-2">
-      <%= f.label :password, "パスワード" %>
+    <div class="row mb-5 justify-content-center">
+      <div class="col-sm-4 offset-sm-2">
+        <%= f.submit "ログイン", class: "btn btn-success px-5" %>
+      </div>
     </div>
-    <div class="col-sm-4">
-      <%= f.password_field :password, autocomplete: "current-password", class: "w-75" %>
-    </div>
-  </div>
-
-  <div class="actions field row justify-content-center">
-    <div class="col-sm-4 offset-sm-2">
-      <%= f.submit "ログイン", class: "btn btn-primary w-25 btn-sm" %>
-    </div>
-  </div>
-
   <% end %>
 
-<%= render "admin/shared/links" %>
 </div>

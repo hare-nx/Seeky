@@ -1,56 +1,66 @@
-<h1>投稿詳細</h1>
-<table>
-  <tr>
-    <td>投稿日</td>
-    <td><%= @post.created_at.strftime("%Y/%m/%d %H:%M") %></td>
-  </tr>
-  <tr>
-    <td>ユーザーID</td>
-    <td>
-      <%= link_to admin_user_path(@post.user) do %>
-        <%= @post.user_id %>
-      <% end %>
-    </td>
-  </tr>
-  <tr>
-    <td>ユーザーネーム</td>
-    <td><%= @post.user.username %></td>
-  </tr>
-  <tr>
-    <td>一言</td>
-    <td><%= @post.body %></td>
-  </tr>
-  <tr>
-    <td>詳細情報</td>
-    <td>
-      <% if @post.outer.present? %>
-        アウター: <%= @post.outer %><br>
-      <% end %>
-      <% if @post.tops.present? %>
-        トップス: <%= @post.tops %><br>
-      <% end %>
-      <% if @post.bottoms.present? %>
-        ボトムス: <%= @post.bottoms %><br>
-      <% end %>
-      <% if @post.shoes.present? %>
-        シューズ: <%= @post.shoes %><br>
-      <% end %>
-      <% if @post.bag.present? %>
-        バッグ: <%= @post.bag %><br>
-      <% end %>
-    </td>
-  </tr>
-  <tr>
-    <td>通報された回数</td>
-    <td><%= @post.user.number_of_reported_posts(@post.user) %></td>
-  </tr>
-  <tr>
-    <td>ステータス</td>
-    <td>
-      <%= form_with model: @post, url: admin_post_path(@post) do |f| %>
-        <%= f.select :status, {"表示": true, "非表示": false} %>
-        <%= f.submit "更新" %>
-      <% end %>
-    </td>
-  </tr>
-</table>
+<div class="container-fruid p-5 m-5">
+  <div class="row mb-5">
+    <h4 class="offset-sm-2">投稿詳細</h4>
+  </div>
+  <div class="row d-flex">
+    <table class="col-sm-6 offset-sm-2 col table-borderless table">
+      <tr>
+        <td>投稿日</td>
+        <td><%= @post.created_at.strftime("%Y/%m/%d %H:%M") %></td>
+      </tr>
+      <tr>
+        <td>ユーザーID</td>
+        <td>
+          <%= link_to admin_user_path(@post.user), class: "text-decoration-none text-dark" do %>
+            <%= @post.user_id %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td>ユーザーネーム</td>
+        <td>
+          <%= link_to admin_user_path(@post.user), class: "text-decoration-none text-dark" do %>
+            <%= @post.user.username %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td>一言</td>
+        <td><%= @post.body %></td>
+      </tr>
+      <tr>
+        <td>詳細情報</td>
+        <td>
+          <% if @post.outer.present? %>
+            アウター: <%= @post.outer %><br>
+          <% end %>
+          <% if @post.tops.present? %>
+            トップス: <%= @post.tops %><br>
+          <% end %>
+          <% if @post.bottoms.present? %>
+            ボトムス: <%= @post.bottoms %><br>
+          <% end %>
+          <% if @post.shoes.present? %>
+            シューズ: <%= @post.shoes %><br>
+          <% end %>
+          <% if @post.bag.present? %>
+            バッグ: <%= @post.bag %><br>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td>通報された回数</td>
+        <td><%= @post.user.number_of_reported_posts(@post.user) %></td>
+      </tr>
+      <tr>
+        <td style="vertical-align: middle;">ステータス</td>
+        <td>
+          <%= form_with model: @post, url: admin_post_path(@post) do |f| %>
+            <%= f.select :status, {"表示": true, "非表示": false}, {}, style: "vertical-align: middle;" %>
+            <%= f.submit "更新", class: "btn btn-primary btn-sm", style: "vertical-align: middle;" %>
+          <% end %>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
