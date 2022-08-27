@@ -1,4 +1,6 @@
 class Admin::ReportsController < ApplicationController
+  before_action :authenticate_admin!
+  
   def reported_posts
     report_post_id=Report.where.not(post_id: nil).each {|p|  p.post_id}
     @posts=Post.where(id: report_post_id)

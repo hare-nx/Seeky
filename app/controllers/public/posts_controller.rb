@@ -1,11 +1,13 @@
 class Public::PostsController < ApplicationController
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+
   def index
     following_users=current_user.relationships.where(user_id: current_user.user_id).pluck(:follow_id)
     if following_users.present?
       @posts=Post.where(user_id: following_users).order(created_at: :desc)
     else
       @recommendation="ユーザーをフォローすると、投稿が見つけやすくなります。"
-      @posts=Post.all
+      @posts=Post.all.order(created_at: :desc)
     end
   end
 
@@ -22,7 +24,7 @@ class Public::PostsController < ApplicationController
 
   def show
     @post=Post.find(params[:id])
-    @comments=@post.comments.all
+    @comments=@post.comments.all.order(created_at: :desc)
     @comment=Comment.new
   end
 
@@ -42,14 +44,23 @@ class Public::PostsController < ApplicationController
   end
 
   def edit
+    @post=Post.find(params[:id])
   end
 
-  def confirm
-    @post = Post.new(post_params)
-
+  def update
+    post=Post.find(params[:id])
+    if post.update(post_params)
+      redirect_to post_path(post)
+    else
+      render :edit
+    end
   end
 
-
+  def destroy
+    post=Post.find(params[:id])
+    post.destroy
+    redirect_to posts_path
+  end
 
 
 

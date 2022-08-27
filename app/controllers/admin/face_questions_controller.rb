@@ -1,5 +1,17 @@
 class Admin::FaceQuestionsController < ApplicationController
+  before_action :authenticate_admin!
+
   def edit
+    @face_question=FaceQuestion.find(params[:id])
+  end
+
+  def update
+    face_question=FaceQuestion.find(params[:id])
+    if face_question.update(face_question_params)
+      redirect_to admin_face_questions_path
+    else
+      render :edit
+    end
   end
 
   def index
@@ -27,6 +39,6 @@ class Admin::FaceQuestionsController < ApplicationController
 
   private
   def face_question_params
-    params.require(:face_question).permit(:title, :answer_1, :answer_2)
+    params.require(:face_question).permit(:title, :answer_1, :answer_2, :generation_or_shape)
   end
 end

@@ -1,5 +1,17 @@
 class Admin::FrameQuestionsController < ApplicationController
+
+
   def edit
+    @frame_question=FrameQuestion.find(params[:id])
+  end
+
+  def update
+    frame_question=FrameQuestion.find(params[:id])
+    if frame_question.update(frame_question_params)
+      redirect_to admin_frame_questions_path
+    else
+      render :edit
+    end
   end
 
   def index
@@ -27,6 +39,6 @@ class Admin::FrameQuestionsController < ApplicationController
 
   private
   def frame_question_params
-    params.require(:frame_question).permit(:title, :strate, :wave, :natural)
+    params.require(:frame_question).permit(:title, :straight, :wave, :natural)
   end
 end

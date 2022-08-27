@@ -1,4 +1,6 @@
 class Public::UsersController < ApplicationController
+  before_action :authenticate_user!, except: [:show, :index, :user_search, :favorites, :following, :followers, :comments]
+
   before_action :set_q, only: [:index, :user_search]
   def show
     @user=User.find(params[:user_id])

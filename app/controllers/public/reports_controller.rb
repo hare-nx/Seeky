@@ -1,4 +1,6 @@
 class Public::ReportsController < ApplicationController
+  before_action :authenticate_user!
+
   def create
     if params[:comment_id] == nil
       post=Post.find(params[:post_id])

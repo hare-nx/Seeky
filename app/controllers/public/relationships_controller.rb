@@ -1,4 +1,5 @@
 class Public::RelationshipsController < ApplicationController
+  
   before_action :set_user
 
   def create

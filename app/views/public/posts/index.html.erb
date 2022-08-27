@@ -8,7 +8,7 @@
   </div>
   <div class="row justify-content-center w-75 mx-auto">
     <% @posts.each do |post| %>
-        <div class="card w-75">
+        <div class="card w-75 mb-4">
           <div class="card-header d-flex align-items-center">
             <%= link_to user_path(post.user) do %>
               <%= image_tag post.user.get_profile_image(80, 80), class: "rounded-circle" %>
