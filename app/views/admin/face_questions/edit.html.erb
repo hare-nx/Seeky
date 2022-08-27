@@ -1,6 +1,11 @@
-<%= form_with model: @face_question, url: admin_face_questions_path do |f| %>
-  <%= f.text_field :title, placeholder: "質問タイトル" %><br>
-  <%= f.text_area :answer_1, placeholder: "子ども顔または曲線" %><br>
-  <%= f.text_area :answer_2, placeholder: "大人顔または直線" %><br>
-  <%= f.submit "保存する" %>
-<% end %>
+<div class="container-fruid p-5 m-5">
+  <div class="row mb-5">
+    <%= form_with model: @face_question, url: admin_face_questions_path do |f| %>
+      <%= f.text_field :title, placeholder: "質問タイトル" %><br>
+      <%= f.text_area :answer_1, placeholder: "子ども顔または曲線", class: "w-100 mt-2" %><br>
+      <%= f.text_area :answer_2, placeholder: "大人顔または直線", class: "w-100" %><br>
+      <%= f.select :generation_or_shape, {"子どもor大人": true, "曲線or直線": false}, {include_blank: '質問の種類'} %><br>
+      <%= f.submit "保存する", class: "btn btn-primary mt-2" %>
+    <% end %>
+  </div>
+</div>

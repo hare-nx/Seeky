@@ -1,33 +1,39 @@
-<%= form_with model: @face_question, url: admin_face_questions_path do |f| %>
-  <%= f.text_field :title, placeholder: "質問タイトル...?" %><br>
-  <%= f.text_area :answer_1, placeholder: "子ども顔または曲線" %><br>
-  <%= f.text_area :answer_2, placeholder: "大人顔または直線" %><br>
-  <%= f.select :generation_or_shape, {"子どもor大人": true, "曲線or直線": false}, {include_blank: '質問ジャンル'} %>
-  <%= f.submit "保存する" %>
-<% end %>
-
-
-
-
-<h1>顔タイプ診断項目一覧</h1>
-<table>
-  <tr>
-    <th>質問タイトル</th>
-    <th>子ども顔or曲線</th>
-    <th>大人顔or直線</th>
-    <th></th>
-  </tr>
-  <% @face_questions.each do |q| %>
-  <tr>
-    <td><%= q.title %>...?</td>
-    <td><%= q.answer_1 %></td>
-    <td><%= q.answer_2 %></td>
-    <% if q.generation_or_shape==true %>
-      <td>子どもor大人</td>
-    <% else %>
-      <td>曲線or直線</td>
+<div class="container-fruid p-5 m-5">
+  <div class="row mb-5">
+    <%= form_with model: @face_question, url: admin_face_questions_path do |f| %>
+      <%= f.text_field :title, placeholder: "質問タイトル" %><br>
+      <%= f.text_area :answer_1, placeholder: "子ども顔または曲線", class: "w-100 mt-2" %><br>
+      <%= f.text_area :answer_2, placeholder: "大人顔または直線", class: "w-100" %><br>
+      <%= f.select :generation_or_shape, {"子どもor大人": true, "曲線or直線": false}, {include_blank: '質問の種類'} %><br>
+      <%= f.submit "保存する", class: "btn btn-primary mt-2" %>
     <% end %>
-    <td><%= link_to "編集", edit_admin_face_question_path(q) %> <%= link_to "削除", admin_face_question_path(q), method: :delete %></td>
-  </tr>
-  <% end %>
-</table>
+  </div>
+
+  <h4 class="pt-5 mb-4">顔タイプ診断項目一覧</h4>
+  <div class="mb-5 justify-content-center">
+    <table class="table table-hover text-dark">
+      <thead class="thead-light">
+        <tr>
+          <th style="vertical-align: middle;">質問タイトル</th>
+          <th style="vertical-align: middle;">子ども顔or曲線</th>
+          <th style="vertical-align: middle;">大人顔or直線</th>
+          <th style="vertical-align: middle;">質問の種類</th>
+          <th></th>
+        </tr>
+      </thead>
+      <% @face_questions.each do |q| %>
+        <tr>
+          <td style="vertical-align: middle;"><%= q.title %></td>
+          <td style="vertical-align: middle;"><%= q.answer_1 %></td>
+          <td style="vertical-align: middle;"><%= q.answer_2 %></td>
+          <% if q.generation_or_shape==true %>
+            <td style="vertical-align: middle;">子どもor大人</td>
+          <% else %>
+            <td style="vertical-align: middle;">曲線or直線</td>
+          <% end %>
+          <td style="vertical-align: middle;"><%= link_to "編集", edit_admin_face_question_path(q), class: "btn btn-outline-primary btn-sm px-3" %> <%= link_to "削除", admin_face_question_path(q), method: :delete, class: "px-3 btn btn-danger btn-sm" %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

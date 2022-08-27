@@ -1,30 +1,35 @@
-<%= form_with model: @frame_question, url: admin_frame_questions_path do |f| %>
-  <%= f.text_field :title, placeholder: "質問タイトル" %><br>
-  <%= f.text_area :straight, placeholder: "ストレート" %><br>
-  <%= f.text_area :wave, placeholder: "ウェーブ" %><br>
-  <%= f.text_area :natural, placeholder: "ナチュラル" %><br>
-  <%= f.submit "保存する" %>
-<% end %>
+<div class="container-fruid p-5 m-5">
+  <div class="row mb-5">
+    <%= form_with model: @frame_question, url: admin_frame_questions_path do |f| %>
+      <%= f.text_field :title, placeholder: "質問タイトル" %><br>
+      <%= f.text_area :straight, placeholder: "ストレート", class: "w-100 mt-2" %><br>
+      <%= f.text_area :wave, placeholder: "ウェーブ", class: "w-100" %><br>
+      <%= f.text_area :natural, placeholder: "ナチュラル", class: "w-100" %><br>
+      <%= f.submit "保存する", class: "btn btn-primary mt-2" %>
+    <% end %>
+  </div>
 
-
-
-
-<h1>骨格タイプ診断項目一覧</h1>
-<table>
-  <tr>
-    <th>質問タイトル</th>
-    <th>ストレート</th>
-    <th>ウェーブ</th>
-    <th>ナチュラル</th>
-    <th></th>
-  </tr>
-  <% @frame_questions.each do |q| %>
-  <tr>
-    <td><%= q.title %>...?</td>
-    <td><%= q.straight %></td>
-    <td><%= q.wave %></td>
-    <td><%= q.natural %></td>
-    <td><%= link_to "編集", edit_admin_frame_question_path(q) %> <%= link_to "削除", admin_frame_question_path(q), method: :delete %></td>
-  </tr>
-  <% end %>
-</table>
+  <h4 class="pt-5 mb-4">骨格診断項目一覧</h4>
+  <div class="mb-5 justify-content-center">
+    <table class="table table-hover text-dark">
+      <thead class="thead-light">
+        <tr>
+          <th style="vertical-align: middle;">質問タイトル</th>
+          <th style="vertical-align: middle;">ストレート</th>
+          <th style="vertical-align: middle;">ウェーブ</th>
+          <th style="vertical-align: middle;">ナチュラル</th>
+          <th></th>
+        </tr>
+      </thead>
+      <% @frame_questions.each do |q| %>
+        <tr>
+          <td style="vertical-align: middle;"><%= q.title %></td>
+          <td style="vertical-align: middle;"><%= q.straight %></td>
+          <td style="vertical-align: middle;"><%= q.wave %></td>
+          <td style="vertical-align: middle;"><%= q.natural %></td>
+          <td style="vertical-align: middle;"><%= link_to "編集", edit_admin_frame_question_path(q), class: "btn btn-outline-primary btn-sm px-3" %> <%= link_to "削除", admin_frame_question_path(q), method: :delete, class: "px-3 btn btn-danger btn-sm" %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

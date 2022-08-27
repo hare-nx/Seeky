@@ -1,31 +1,39 @@
-<h1>通報投稿一覧</h1>
-<table>
-  <tr>
-    <th>投稿日</th>
-    <th>ユーザーID</th>
-    <th>通報数</th>
-    <th>ステータス</th>
-  </tr>
-  <% @posts.each do |post| %>
-  <tr>
-    <td>
-      <%= link_to admin_post_path(post) do %>
-        <%= post.created_at.strftime("%Y/%m/%d %H:%M") %>
+<div class="container-fruid p-5 m-5">
+  <div class="row mb-5">
+    <h4 class="offset-sm-2">投稿通報履歴</h4>
+  </div>
+  <div class="mb-5 justify-content-center">
+    <table class="table col-sm-8 mx-auto table-hover text-dark">
+      <thead class="thead-light">
+        <tr>
+          <th>投稿日</th>
+          <th>ユーザーID</th>
+          <th>通報数</th>
+          <th>ステータス</th>
+        </tr>
+      </thead>
+      <% @posts.each do |post| %>
+        <tr>
+          <td>
+            <%= link_to admin_post_path(post), class: "text-decoration-none text-dark" do %>
+              <%= post.created_at.strftime("%Y/%m/%d %H:%M") %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to admin_user_path(post.user), class: "text-decoration-none text-dark" do %>
+              <%= post.user_id %>
+            <% end %>
+          </td>
+          <td><%= post.user.number_of_reported_posts(post.user) %></td>
+          <td>
+            <% if post.status? %>
+              <span class="font-weight-bold text-success">表示</span>
+            <% else %>
+              <span class="font-weight-bold text-muted">非表示</span>
+            <% end %>
+          </td>
+        </tr>
       <% end %>
-    </td>
-    <td>
-      <%= link_to admin_user_path(post.user) do %>
-        <%= post.user_id %>
-      <% end %>
-    </td>
-    <td><%= post.user.number_of_reported_posts(post.user) %></td>
-    <td>
-      <% if post.status? %>
-        表示
-      <% else %>
-        非表示
-      <% end %>
-    </td>
-  </tr>
-  <% end %>
-</table>
+    </table>
+  </div>
+</div>
