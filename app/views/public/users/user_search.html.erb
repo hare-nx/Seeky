@@ -1,13 +1,6 @@
 <div class="container-fluid my-5 px-0 mx-0">
   <div class="row justify-content-center mx-5 flex-sm-nowrap">
-    <div class="col-sm-3 mx-2 border-right sticky-top justify-content-center">
-      <p>ユーザーID/ユーザーネームから検索</p>
-      <%= search_form_for @q, url: search_users_path, class: "d-flex flex-column w-75 mx-auto" do |f| %>
-        <%= f.search_field :username_or_user_id_cont, placeholder: "ユーザーID/ユーザーネーム" %>
-        <%= f.submit "検索", class: "btn btn-outline-success btn-sm mt-3 mb-5" %>
-      <% end %>
-      <%= render 'usersearch', q: @q %>
-    </div>
+    <%= render 'usersearch', q: @q %>
     <div class="col-sm-9 mx-2">
       <% if @results.present? %>
         <%= render 'relationship', users: @results %>
