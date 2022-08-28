@@ -30,6 +30,7 @@ class Public::UsersController < ApplicationController
 
   def user_search
     @results = @q.result(distinct: true)
+    @users=User.all
   end
 
   def favorites

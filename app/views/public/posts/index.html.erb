@@ -4,7 +4,7 @@
       <p class="ml-5"><%= @recommendation %></p>
     <% end %>
 
-    <%# ユーザーを探す %>
+    <%= link_to "ユーザーを探す", users_path %>
   </div>
   <div class="row justify-content-center w-75 mx-auto">
     <% @posts.each do |post| %>

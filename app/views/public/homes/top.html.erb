@@ -1,6 +1,14 @@
 <div class="container-fluid my-5 px-0 mx-0">
   <div class="row justify-content-center mx-5 flex-sm-nowrap">
-    <%= render 'search', q: @q %>
+    <div class="col-sm-3 mx-2 border-right sticky-top justify-content-center">
+      <p>キーワード検索</p>
+      <%= search_form_for @q, url: search_path, class: "d-flex flex-column w-75 mx-auto" do |f| %>
+        <%= f.search_field :outer_or_tops_or_bottoms_or_shoes_or_bag_or_body_cont, placeholder: "服の種類/ブランド名", class: "mb-1" %>
+        <%= f.search_field :user_username_or_user_user_id_cont, placeholder: "ユーザーID/ユーザーネーム" %>
+        <%= f.submit "検索", class: "btn btn-outline-success btn-sm mt-3 mb-5" %>
+      <% end %>
+      <%= render 'search', q: @q %>
+    </div>
     <div class="col-sm-9 mx-2">
       <div class="d-flex flex-wrap">
         <% @posts.each do |post| %>
