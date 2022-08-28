@@ -45,6 +45,9 @@
     <div class="col-auto offset-sm-2">
       <%= link_to "アカウント作成", new_user_registration_path, class: "btn btn-outline-primary" %>
     </div>
+    <div class="col-auto offset-sm-2 mt-2">
+      <%= link_to 'ゲストとしてログインする', users_guest_sign_in_path, method: :post, class: "btn btn-info" %>
+    </div>
   </div>
 </div>
 

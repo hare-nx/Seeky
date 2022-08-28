@@ -25,6 +25,15 @@ class User < ApplicationRecord
 
   self.primary_key = :user_id
 
+
+  def self.guest
+    find_or_create_by!(email: 'guest@example.com') do |user|
+      user.password = SecureRandom.urlsafe_base64
+      user.user_id = "guest_id"
+      user.username="ゲスト"
+    end
+  end
+
   def get_profile_image(width, height)
     unless profile_image.attached?
       file_path = Rails.root.join('app/assets/images/no_image.jpg')
@@ -55,6 +64,6 @@ class User < ApplicationRecord
   def number_of_reported_comments(user)
     Report.where(reported_id: user.user_id).pluck(:comment_id).compact.count
   end
-  
-  
+
+
 end
