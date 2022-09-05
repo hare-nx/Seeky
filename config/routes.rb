@@ -30,6 +30,7 @@ Rails.application.routes.draw do
         get "unsubscribe"
         patch "withdraw"
       end
+      resource :avatar, only: [:create, :update]
     end
     resources :posts, only: [:show, :new, :create, :edit, :update, :destroy, :index] do
       collection do

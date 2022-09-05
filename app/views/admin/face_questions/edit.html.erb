@@ -1,6 +1,6 @@
 <div class="container-fruid p-5 m-5">
   <div class="row mb-5">
-    <%= form_with model: @face_question, url: admin_face_questions_path do |f| %>
+    <%= form_with model: @face_question, url: admin_face_question_path(@face_question) do |f| %>
       <%= f.text_field :title, placeholder: "質問タイトル" %><br>
       <%= f.text_area :answer_1, placeholder: "子ども顔または曲線", class: "w-100 mt-2" %><br>
       <%= f.text_area :answer_2, placeholder: "大人顔または直線", class: "w-100" %><br>

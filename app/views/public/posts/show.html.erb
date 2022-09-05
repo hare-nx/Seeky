@@ -3,7 +3,7 @@
     <div class="card w-75">
       <div class="card-header d-flex align-items-center">
         <%= link_to user_path(@post.user) do %>
-          <%= image_tag @post.user.get_profile_image(80, 80), class: "rounded-circle" %>
+          <%= image_tag @post.user.avatar.get_profile_image(80, 80), class: "rounded-circle", style: "width:80px; height:80px;" %>
         <% end %>
         <%= link_to "#{@post.user.username}", user_path(@post.user), class: "ml-3 text-dark" %>
 
@@ -81,7 +81,7 @@
         <div class="overflow-auto" style="max-height:400px">
         <% @comments.each do |comment| %>
           <div class="d-flex p-2">
-            <%= image_tag comment.user.get_profile_image(80, 80), class: "h-100 mr-3 rounded-circle" %>
+            <%= image_tag comment.user.avatar.get_profile_image(80, 80), class: "h-100 mr-3 rounded-circle", style: "width:80px; height:80px;" %>
             <div>
               <p class="mb-0">
                 <%= comment.user.username %><br>

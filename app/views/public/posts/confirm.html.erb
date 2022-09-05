@@ -1,5 +1,4 @@
 <%= form_with model: @post, url: posts_path do |f| %>
-  <% byebug %>
   <%= image_tag @post.post_image %>
   <%= f.hidden_field :post_image, :value => params[:post][:post_image] %>
   <%= f.hidden_field :tops, :value => params[:post][:tops] %>

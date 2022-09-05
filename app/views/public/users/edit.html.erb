@@ -2,15 +2,16 @@
   <div class="row mb-5">
     <h4 class="offset-sm-2">プロフィール編集</h4>
   </div>
+  <div class="row ml-5 pl-5 mb-5">
+    <%= form_with model: [@user, @avatar], url: user_avatar_path(@user), class: "bg-light align-items-end d-flex py-2 px-5" do |f| %>
+      <%= image_tag @user.avatar.get_profile_image(100, 100), class: "rounded-circle", style: "width:100px; height:100px;" %>
+      <%= f.file_field :profile_image, accept: "image/*", class: "mr-4" %>
+      <%= f.submit "更新", class: "btn btn-success" %>
+    <% end %>
+  </div>
   <div class="row justify-content-center">
-    <%= form_with model: @user, url: user_path(@user) do |f| %>
+    <%= form_with model: @user do |f| %>
       <table class="table table-borderless col-sm-7 offset-sm-1">
-        <tr>
-          <td><%= f.label :profile_image, "プロフィール画像" %></td>
-          <td>
-            <%= f.file_field :profile_image %>
-          </td>
-        </tr>
         <tr>
           <td><%= f.label :username, "ユーザーネーム" %></td>
           <td><%= f.text_field :username %></td>

@@ -4,5 +4,6 @@
 <% end %>
 
 <% @posts.each do |post| %>
+          <%= post.post_image.attached? %>
   <%= image_tag post.get_post_image(300, 400) %>
 <% end %>

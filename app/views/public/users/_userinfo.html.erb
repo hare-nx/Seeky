@@ -3,7 +3,7 @@
     <div class="card w-75 px-3 pt-1 mx-auto">
       <div class="card-body text-dark">
         <div class="d-sm-flex">
-          <%= image_tag user.get_profile_image(100, 100), class: "rounded-circle", style: "width:100px; height:100px;" %>
+          <%= image_tag user.avatar.get_profile_image(100, 100), class: "rounded-circle", style: "width:100px; height:100px;" %>
           <div class="ml-sm-5 align-self-center">
             <h4 class="font-weight-bold mt-2 mb-0"><%= user.username %></h4>
             <%= user.user_id %>

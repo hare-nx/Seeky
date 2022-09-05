@@ -7,6 +7,7 @@ class Public::SessionsController < Devise::SessionsController
 
   def guest_sign_in
     user = User.guest
+    Avatar.find_or_create_by(user_id: "guest_id")
     sign_in user
     redirect_to root_path, notice: 'ゲストユーザーとしてログインしました。'
   end
@@ -28,10 +29,10 @@ class Public::SessionsController < Devise::SessionsController
 
   protected
   def user_state
-    @user=User.find_by(user_id: params[:user][:user_id])
+    @user=User.find_by(email: params[:user][:email])
     return if !@user
-    if @user.valid_password?(params[:user][:password])&&@user.status==2
-      redirect_to new_customer_registration_path
+    if @user.valid_password?(params[:user][:password]) && @user.status == "withdrawal"
+      redirect_to new_user_registration_path
     end
   end
   # If you have extra params to permit, append them to the sanitizer.

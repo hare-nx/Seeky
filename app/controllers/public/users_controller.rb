@@ -12,15 +12,21 @@ class Public::UsersController < ApplicationController
 
   def edit
     @user=User.find_by(user_id: current_user.user_id)
+    if @user.avatar.present?
+      @avatar=Avatar.find_by(user_id: @user.user_id)
+    else
+      @avatar=Avatar.new
+    end
   end
 
+
   def update
-    user=User.find_by(user_id: current_user.user_id)
-    user.update(user_params)
+    @user=User.find_by(user_id: current_user.user_id)
+    @user.update(user_params)
     if params[:frame_type_analysis]
       redirect_to face_type_analysis_user_path(current_user.user_id)
     else
-      redirect_to user_path(user)
+      redirect_to user_path(@user)
     end
   end
 
@@ -145,7 +151,7 @@ class Public::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:user_id, :user_name, :email, :password, :face_type, :frame_type, :stature, :introduction)
+    params.require(:user).permit(:user_id, :username, :email, :password, :face_type, :frame_type, :stature, :introduction)
   end
 
   def set_q

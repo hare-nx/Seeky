@@ -2,6 +2,7 @@
 
 class Public::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, if: :devise_controller?
+
   # before_action :configure_account_update_params, only: [:update]
 
   def after_sign_up_path_for(resource)
@@ -13,9 +14,11 @@ class Public::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    super
+    avatar=Avatar.new(user_id: @user.user_id)
+    avatar.save
+  end
 
   # GET /resource/edit
   # def edit
