@@ -4,12 +4,12 @@ class Public::UsersController < ApplicationController
   before_action :set_q, only: [:index, :user_search]
   def show
     @user=User.find(params[:user_id])
-    unless @user.status=="withdrawal"
+    if user_signed_in?
       @following_user=current_user.relationships.find_by(follow_id: @user.user_id)
       @relationship=Relationship.new
-      @followers=Relationship.where(follow_id: @user.user_id)
-      @posts=@user.posts.all
     end
+    @followers=Relationship.where(follow_id: @user.user_id)
+    @posts=@user.posts.all
   end
 
   def edit
@@ -41,12 +41,12 @@ class Public::UsersController < ApplicationController
   end
 
   def index
-    @users=User.where(status: "active")
+    @users=User.where(status: ["active", "suspension"])
   end
 
   def user_search
     @results = @q.result(distinct: true)
-    @users=User.where(status: "active")
+    @users=User.where(status: ["active", "suspension"])
   end
 
   def favorites
@@ -149,7 +149,7 @@ class Public::UsersController < ApplicationController
 
   def withdraw
     @user=User.find_by(user_id: current_user.user_id)
-    @user.update(status: 2)
+    @user.update(status: "withdrawal")
     @user.posts.destroy_all
     @user.comments.destroy_all
     reset_session
@@ -167,6 +167,6 @@ class Public::UsersController < ApplicationController
   end
 
   def set_q
-    @q = User.where(status: "active").ransack(params[:q])
+    @q = User.where(status: ["active", "suspension"]).ransack(params[:q])
   end
 end

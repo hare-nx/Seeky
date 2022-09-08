@@ -1,12 +1,16 @@
 <div class="card-body">
   <div class="list-group-flush text-dark">
     <% users.each do |user| %>
-    <% if user.status=="active" %>
       <%= link_to user_path(user), class: "text-decoration-none list-group-item list-group-item-action d-flex" do %>
-        <%= image_tag user.avatar.get_profile_image(80, 80), class: "rounded-circle", style: "width:80px; height:80px;" %>
+        <% unless user.status=="withdrawal" %>
+          <%= image_tag user.avatar.get_profile_image(80, 80), class: "rounded-circle", style: "width:80px; height:80px;" %>
+        <% else %>
+          <div class="rounded-circle bg-dark" style="width:80px; height:80px;"></div>
+        <% end %>
         <div class="ml-3">
           <div class="d-flex">
             <p class="font-weight-bold mb-0"><%= user.username %></p>
+            <% unless user.status=="withdrawal" %>
             <small class="ml-5" style="background: linear-gradient(transparent 60%, #ffffa8 0%);">
               <%= user.face_type_i18n if user.face_type.present? %>
               <% if user.frame_type.present? %>
@@ -16,12 +20,12 @@
                 <%= "・" if (user.face_type||user.frame_type).present? %><%= user.stature %>cm
               <% end %>
             </small>
+            <% end %>
           </div>
           <p><%= user.user_id %></p>
-          <%= user.introduction %>
+          <%= user.introduction unless user.status=="withdrawal" %>
         </div>
       <% end %>
-    <% end %>
     <% end %>
   </div>
 </div>

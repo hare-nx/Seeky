@@ -17,6 +17,7 @@
               <% end %>
             </P>
           </div>
+          <% if user_signed_in? %>
           <div class="ml-sm-auto mt-1">
             <% if user==current_user %>
               <%= link_to "プロフィール編集", edit_user_path(current_user.user_id), class: "btn btn-outline-secondary" %>
@@ -34,12 +35,13 @@
               <% end %>
             <% end %>
           </div>
+          <% end %>
         </div>
         <div>
         <% if user.introduction? %>
           <p class="card-text mt-4 pt-1"><%= user.introduction %></p>
         <% end %>
-        <p class="mt-4">投稿<%= user.posts.count %>件</p>
+        <p class="mt-4">投稿<%= user.posts.where(status: true).count %>件</p>
         <p>
           <%= link_to following_user_path(user), class: "text-dark text-decoration-none" do %>
             フォロー中<%= user.relationships.count %>人
