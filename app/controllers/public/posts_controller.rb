@@ -4,10 +4,10 @@ class Public::PostsController < ApplicationController
   def index
     following_users=current_user.relationships.where(user_id: current_user.user_id).pluck(:follow_id)
     if following_users.present?
-      @posts=Post.where(user_id: following_users).order(created_at: :desc)
+      @posts=Post.where(user_id: following_users, status: true).order(created_at: :desc)
     else
       @recommendation="ユーザーをフォローすると、投稿が見つけやすくなります。"
-      @posts=Post.all.order(created_at: :desc)
+      @posts=Post.where(status: true).order(created_at: :desc)
     end
   end
 
@@ -19,40 +19,56 @@ class Public::PostsController < ApplicationController
     elsif (current_user.face_type!=nil)&&(current_user.frame_type==nil)
       users=User.where(face_type: current_user.face_type)
     end
-    @posts=Post.where(user_id: users).order(created_at: :desc)
+    @posts=Post.where(user_id: users, status: "active").order(created_at: :desc)
   end
 
   def show
-    @post=Post.find(params[:id])
-    @comments=@post.comments.all.order(created_at: :desc)
-    @comment=Comment.new
+    post=Post.find(params[:id])
+    if post.status==true
+      @post=post
+      @comments=@post.comments.where(status: true).order(created_at: :desc)
+      @comment=Comment.new
+    else
+      redirect_to posts_path
+    end
   end
 
   def new
-    @post = Post.new
-
+    if current_user.status=="active"
+      @post = Post.new
+    end
   end
 
   def create
     @post = Post.new(post_params)
     @post.user_id=current_user.user_id
-    if @post.save
-      redirect_to post_path(@post)
+    if current_user.status=="active"
+      if @post.save
+        redirect_to post_path(@post)
+      else
+        render :new
+      end
     else
-      render :new
+      redirect_to new_post_path
     end
   end
 
   def edit
-    @post=Post.find(params[:id])
+    if current_user.status=="active"
+      @post=Post.find(params[:id])
+    end
   end
 
   def update
-    post=Post.find(params[:id])
-    if post.update(post_params)
-      redirect_to post_path(post)
+    if current_user=="active"
+      post=Post.find(params[:id])
+      if post.update(post_params)
+        redirect_to post_path(post)
+      else
+        render :edit
+      end
     else
-      render :edit
+      redirect_to edit_post_path(post)
     end
   end
 

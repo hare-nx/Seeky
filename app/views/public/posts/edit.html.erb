@@ -3,6 +3,10 @@
     <h4 class="offset-sm-2">投稿編集</h4>
   </div>
 
+  <% if current_user.status=="suspension" %>
+  <p>このアカウントは停止中です。</p>
+  <% else %>
+
   <% if @post.errors.any? %>
     <div class="row mb-5 d-flex flex-column">
       <p class="offset-sm-2 pl-5 font-weight-bolder text-danger"><%= @post.errors.count %>件のエラーにより、投稿が送信できませんでした</p>
@@ -68,4 +72,5 @@
       reader.readAsDataURL(e.target.files[0]);
     });
   </script>
+  <% end %>
 </div>

@@ -1,6 +1,7 @@
 <div class="card-body">
   <div class="list-group-flush text-dark">
     <% users.each do |user| %>
+    <% if user.status=="active" %>
       <%= link_to user_path(user), class: "text-decoration-none list-group-item list-group-item-action d-flex" do %>
         <%= image_tag user.avatar.get_profile_image(80, 80), class: "rounded-circle", style: "width:80px; height:80px;" %>
         <div class="ml-3">
@@ -20,6 +21,7 @@
           <%= user.introduction %>
         </div>
       <% end %>
+    <% end %>
     <% end %>
   </div>
 </div>

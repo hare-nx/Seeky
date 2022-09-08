@@ -2,7 +2,7 @@ class Public::HomesController < ApplicationController
   before_action :set_q, only: [:top, :post_search]
 
   def top
-    @posts=Post.all.order(created_at: :desc)
+    @posts=Post.where(status: true).order(created_at: :desc)
   end
 
   def about
@@ -17,7 +17,7 @@ class Public::HomesController < ApplicationController
   private
 
   def set_q
-    @q = Post.ransack(params[:q])
+    @q = Post.where(status: true).ransack(params[:q])
   end
 
 end

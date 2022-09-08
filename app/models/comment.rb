@@ -1,7 +1,7 @@
 class Comment < ApplicationRecord
   belongs_to :user, primary_key: :user_id
   belongs_to :post
-  has_many :reports, dependent: :destroy
+  has_many :reports
 
   validates :user_id, :post_id, :comment, presence: true
   validates :comment, length: {maximum: 200}

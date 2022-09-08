@@ -1,1 +1,5 @@
-<%= render 'userinfo', user: @user, following_user: @following_user, relationship: @relationship, followers: @followers, posts: @posts %>
+<% unless @user.status=="withdrawal" %>
+  <%= render 'userinfo', user: @user, following_user: @following_user, relationship: @relationship, followers: @followers, posts: @posts %>
+<% else %>
+  <p>このアカウントは削除されました。</p>
+<% end %>

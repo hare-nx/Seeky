@@ -1,21 +1,29 @@
 class Public::RelationshipsController < ApplicationController
-  
+
   before_action :set_user
 
   def create
-    following = current_user.follow(@user)
-    following.save
-    if params[:following]
-      redirect_to following_user_path
+    if current_user.status=="active"
+      following = current_user.follow(@user)
+      following.save
+      if params[:following]
+        redirect_to following_user_path
+      else
+        redirect_to user_path(@user)
+      end
     else
       redirect_to user_path(@user)
     end
   end
 
   def destroy
-    following = current_user.unfollow(@user)
-    following.destroy
-    redirect_to @user
+    if current_user.status=="active"
+      following = current_user.unfollow(@user)
+      following.destroy
+      redirect_to @user
+    else
+      redirect_to user_path(@user)
+    end
   end
 
   private

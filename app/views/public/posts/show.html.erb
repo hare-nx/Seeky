@@ -69,9 +69,9 @@
         <% end %>
 
         <div>
-          <%= @post.user.face_type_i18n if @post.user.face_type.present? %> /
-          <%= @post.user.frame_type_i18n if @post.user.frame_type.present? %> /
-          <%= "#{@post.user.stature}cm" if @post.user.stature.present? %>
+          <%= @post.user.face_type_i18n if @post.user.face_type.present? %>
+          <%= " / #{@post.user.frame_type_i18n}" if @post.user.frame_type.present? %>
+          <%= " / #{@post.user.stature}cm" if @post.user.stature.present? %>
         </div>
 
         <p class="my-4"><%= @post.created_at.strftime("%Y.%m.%d  %H:%M") %></p>

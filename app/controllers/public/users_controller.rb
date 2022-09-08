@@ -4,39 +4,49 @@ class Public::UsersController < ApplicationController
   before_action :set_q, only: [:index, :user_search]
   def show
     @user=User.find(params[:user_id])
-    @following_user=current_user.relationships.find_by(follow_id: @user.user_id)
-    @relationship=Relationship.new
-    @followers=Relationship.where(follow_id: @user.user_id)
-    @posts=@user.posts.all
+    unless @user.status=="withdrawal"
+      @following_user=current_user.relationships.find_by(follow_id: @user.user_id)
+      @relationship=Relationship.new
+      @followers=Relationship.where(follow_id: @user.user_id)
+      @posts=@user.posts.all
+    end
   end
 
   def edit
-    @user=User.find_by(user_id: current_user.user_id)
-    if @user.avatar.present?
-      @avatar=Avatar.find_by(user_id: @user.user_id)
+    if current_user.status=="active"
+      @user=User.find_by(user_id: current_user.user_id)
+      if @user.avatar.present?
+        @avatar=Avatar.find_by(user_id: @user.user_id)
+      else
+        @avatar=Avatar.new
+      end
     else
-      @avatar=Avatar.new
+      redirect_to user_path(current_user.user_id)
     end
   end
 
 
   def update
-    @user=User.find_by(user_id: current_user.user_id)
-    @user.update(user_params)
-    if params[:frame_type_analysis]
-      redirect_to face_type_analysis_user_path(current_user.user_id)
+    if current_user.status=="active"
+      @user=User.find_by(user_id: current_user.user_id)
+      @user.update(user_params)
+      if params[:frame_type_analysis]
+        redirect_to face_type_analysis_user_path(current_user.user_id)
+      else
+        redirect_to user_path(@user)
+      end
     else
-      redirect_to user_path(@user)
+      redirect_to user_path(current_user)
     end
   end
 
   def index
-    @users=User.all
+    @users=User.where(status: "active")
   end
 
   def user_search
     @results = @q.result(distinct: true)
-    @users=User.all
+    @users=User.where(status: "active")
   end
 
   def favorites
@@ -140,6 +150,8 @@ class Public::UsersController < ApplicationController
   def withdraw
     @user=User.find_by(user_id: current_user.user_id)
     @user.update(status: 2)
+    @user.posts.destroy_all
+    @user.comments.destroy_all
     reset_session
     redirect_to root_path
   end
@@ -155,6 +167,6 @@ class Public::UsersController < ApplicationController
   end
 
   def set_q
-    @q = User.ransack(params[:q])
+    @q = User.where(status: "active").ransack(params[:q])
   end
 end

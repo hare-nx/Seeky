@@ -6,6 +6,7 @@
     <%= form_with model: [@user, @avatar], url: user_avatar_path(@user), class: "bg-light align-items-end d-flex py-2 px-5" do |f| %>
       <%= image_tag @user.avatar.get_profile_image(100, 100), class: "rounded-circle", style: "width:100px; height:100px;" %>
       <%= f.file_field :profile_image, accept: "image/*", class: "mr-4" %>
+      <%= f.hidden_field :user_id, value: current_user.user_id %>
       <%= f.submit "更新", class: "btn btn-success" %>
     <% end %>
   </div>
