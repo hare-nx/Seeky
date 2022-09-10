@@ -60,8 +60,8 @@ class Public::PostsController < ApplicationController
   end
 
   def update
-    if current_user=="active"
-      post=Post.find(params[:id])
+    post=Post.find(params[:id])
+    if current_user.status=="active"
       if post.update(post_params)
         redirect_to post_path(post)
       else
