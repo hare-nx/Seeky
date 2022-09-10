@@ -26,7 +26,7 @@
           </td>
           <td><%= post.user.number_of_reported_posts(post.user) %></td>
           <td>
-            <% if post.status? %>
+            <% if post.status==true? %>
               <span class="font-weight-bold text-success">表示</span>
             <% else %>
               <span class="font-weight-bold text-muted">非表示</span>
